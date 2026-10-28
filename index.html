@@ -24,7 +24,7 @@
     *{box-sizing:border-box}
     html{scroll-behavior:smooth;scroll-padding-top:76px}
     body{margin:0;background:var(--paper);color:var(--text);font:16px/1.6 var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
-    img{max-width:100%;display:block}
+    img{max-width:100%;height:auto;display:block}
     a{color:inherit}
     button,input,select,textarea{font:inherit;color:inherit}
     .wrap{width:min(var(--max),calc(100% - 40px));margin:auto}
@@ -184,9 +184,9 @@
     .opt[aria-pressed="true"]{background:var(--ink);color:var(--cream);border-color:var(--ink)}
 
     /* camiseta */
-    .shirt{display:grid;grid-template-columns:1.1fr .9fr;gap:26px;align-items:start}
+    .shirt{display:grid;grid-template-columns:1.1fr .9fr;gap:26px;align-items:stretch}
     .shirt-img{border:2px solid var(--cream);border-radius:18px;overflow:hidden;cursor:zoom-in;background:var(--ink)}
-    .shirt-img img{width:100%;aspect-ratio:4/3.4;object-fit:cover;object-position:center}
+    .shirt-img img{width:100%;height:100%;min-height:320px;object-fit:cover;object-position:45% center}
     .shirt-card{background:var(--cream);color:var(--ink);border:2px solid var(--ink);border-radius:18px;padding:24px;display:grid;gap:16px}
     .shirt-card h3{font:400 26px/1.1 var(--display);margin:0}
     .shirt-card p{margin:0;font-size:14px;color:var(--muted)}
