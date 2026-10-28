@@ -82,6 +82,9 @@ html = re.sub(r'href="https://waze\.com/ul[^"]*"', 'href="https://waze.com"', ht
 
 # ---------- WhatsApp: na prévia mostra a mensagem em vez de enviar ----------
 html = html.replace("whatsapp: '5561991812748'", "whatsapp: ''")
+# prévia nunca grava no banco: sem url, salvar() devolve { preview: true }
+html = re.sub(r"supabase: \{ url: '[^']*', key: '[^']*' \}", "supabase: { url: '', key: '' }", html)
+html = html.replace('https://rfn7.github.io/eleva-open-boulder/', '')
 html = html.replace(
     "function openWa(text){ window.open(waLink(text), '_blank', 'noopener'); }",
     "function openWa(text){ $('#wa-msg').textContent=text; $('#wa-preview').classList.add('open'); }")
@@ -120,5 +123,5 @@ for pat in [r'<!doctype html>\s*', r'<html[^>]*>\s*', r'</html>\s*', r'<head>\s*
 html = html.replace('body{margin:0;background:var(--paper)', ':root{color-scheme:light}\n    body{margin:0;background:var(--paper)', 1)
 
 (out / 'index.html').write_text(html.strip() + '\n', encoding='utf-8')
-left = re.findall(r'.{30}(?:Eleva|DFM|31\.288|elevaescalada|SOF Sul|5561991812748).{30}', html, flags=re.I)
+left = re.findall(r'.{30}(?:Eleva|DFM|31\.288|elevaescalada|SOF Sul|5561991812748|supabase\.co|sb_publishable).{30}', html, flags=re.I)
 print('restos de marca:', left or 'nenhum')
