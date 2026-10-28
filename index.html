@@ -200,12 +200,6 @@
     .done code{font:700 15px var(--mono);background:var(--paper2);border:1.5px dashed var(--ink);border-radius:8px;padding:4px 8px}
     .lot .promo{align-self:flex-start;margin-top:8px;font:700 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
 
-    /* galeria */
-    .gallery{columns:3;column-gap:14px}
-    .gallery figure{margin:0 0 14px;break-inside:avoid;border-radius:var(--r);overflow:hidden;border:2px solid var(--ink);cursor:zoom-in;position:relative}
-    .gallery img{width:100%;transition:transform .5s}
-    .gallery figure:hover img{transform:scale(1.04)}
-    .gallery figcaption{position:absolute;left:10px;bottom:10px;background:var(--cream);border:1.5px solid var(--ink);border-radius:999px;padding:3px 10px;font:700 10px var(--mono);letter-spacing:.08em;text-transform:uppercase}
 
     /* patrocinadores */
     .sponsors{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
@@ -328,7 +322,6 @@
       .about,.schedule,.local,.faq,.ticket-info,.shirt{grid-template-columns:1fr;gap:34px}
       .schedule-art{position:static}
       .schedule-art img{max-width:200px}
-      .gallery{columns:2}
       .footer-grid{grid-template-columns:1fr}
     }
     @media (max-width:600px){
@@ -353,7 +346,6 @@
       .fgrid,.kit-fields{grid-template-columns:1fr}
       .choices{grid-template-columns:1fr}
       .choices.two{grid-template-columns:1fr 1fr}
-      .gallery{columns:1}
       .mobile-cta{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:45;gap:10px;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:rgba(15,15,15,.96);border-top:1px solid var(--line-d);transform:translateY(110%);transition:transform .3s}
       .mobile-cta.show{transform:none}
       .mobile-cta .btn{flex:1;padding:12px;box-shadow:none;border-color:var(--gold)}
@@ -520,7 +512,7 @@
         <p>Arte exclusiva do Estúdio Avoada para os 8 anos de Eleva. Só na cor preta, em edição limitada.</p>
       </div>
       <div class="shirt reveal">
-        <div class="shirt-img" data-zoom="assets/camiseta-rocha.jpg"><img src="assets/camiseta-rocha.jpg" alt="Camiseta oficial preta com o brasão Climb das Antigas nas costas" loading="lazy" width="1800" height="1005"></div>
+        <div class="shirt-img" data-zoom="assets/camiseta-rocha.jpg"><img src="assets/camiseta-rocha.jpg" alt="Camiseta oficial preta com o brasão Climb das Antigas nas costas" loading="lazy" width="1600" height="893"></div>
         <form class="shirt-card" id="shirt-form" novalidate>
           <span class="tag hot">Mesmo valor em qualquer lote</span>
           <h3>Camiseta preta Climb das Antigas</h3>
@@ -538,17 +530,6 @@
           <button class="btn gold block" type="submit">Pedir camiseta</button>
         </form>
       </div>
-    </div>
-  </section>
-
-  <!-- GALERIA -->
-  <section id="galeria">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <div><p class="kicker">Identidade 2026</p><h2>Climb das Antigas.</h2></div>
-        <p>Toda a arte do Open 2026, criada pelo Estúdio Avoada. Toque numa imagem para ampliar.</p>
-      </div>
-      <div class="gallery reveal" id="gallery"></div>
     </div>
   </section>
 
@@ -772,10 +753,6 @@ const CONFIG = {
     { n:'07', grupo:'Acessível', nome:'Paraclimb', desc:'Para quem tem alguma deficiência física.', holds:[] },
   ],
   naipes: ['Masculino','Feminino'], // todas as categorias têm as duas divisões
-  galeria: [
-    ['assets/poster.jpg','Pôster'],['assets/brasao.jpg','Brasão'],['assets/camiseta-rocha.jpg','Camiseta'],
-    ['assets/inscricoes.jpg','Inscrições abertas'],['assets/brasao-dourado.jpg','Brasão dourado'],
-  ],
 };
 
 /* ===================================================================== */
@@ -900,9 +877,7 @@ $('#cat-grid').innerHTML = CONFIG.categorias.map(c=>`
 $('#naipe').innerHTML = '<option value="">Selecione</option>' + CONFIG.naipes.map(n=>`<option>${n}</option>`).join('');
 $('#categoria').innerHTML = '<option value="">Selecione</option>' + CONFIG.categorias.map(c=>`<option>${c.nome}</option>`).join('');
 
-/* galeria + lightbox */
-$('#gallery').innerHTML = CONFIG.galeria.map(([src,cap])=>`<figure data-zoom="${src}"><img src="${src}" alt="${esc(cap)}" loading="lazy"><figcaption>${esc(cap)}</figcaption></figure>`).join('');
-$('#gallery').addEventListener('click',e=>{const f=e.target.closest('[data-zoom]'); if(f) openLightbox(f.dataset.zoom, f.textContent.trim());});
+/* lightbox */
 function openLightbox(src,alt){ $('#lb-img').src=src; $('#lb-img').alt=alt||''; $('#lightbox').classList.add('open'); }
 function closeLightbox(){ $('#lightbox').classList.remove('open'); }
 $('#lightbox').addEventListener('click',e=>{ if(e.target.id!=='lb-img') closeLightbox(); });
