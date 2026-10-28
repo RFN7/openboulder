@@ -1,0 +1,1031 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0f0f0f">
+  <title>Eleva Open Boulder 2026 — Climb das Antigas</title>
+  <meta name="description" content="Eleva Open Boulder 2026 · Climb das Antigas. 12 de dezembro na Eleva Academia de Escalada, Guará — Brasília. Inscrições, ingressos por lote e loja oficial.">
+  <meta property="og:title" content="Eleva Open Boulder 2026 — Climb das Antigas">
+  <meta property="og:description" content="12 de dezembro · Eleva Academia de Escalada, Brasília. Inscrições abertas.">
+  <meta property="og:image" content="https://rfn7.github.io/eleva-open-boulder/assets/inscricoes.jpg">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/brasao.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Courier+Prime:wght@400;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ink:#0f0f0f;--cream:#ffebb4;--paper:#fbf3dc;--paper2:#f3e4bb;--gold:#c08d42;--rust:#812300;--rust2:#a33a12;--olive:#666026;--blue:#628cff;
+      --text:#1d1a14;--muted:#6b5f45;--line:rgba(15,15,15,.14);--line-d:rgba(255,235,180,.16);
+      --display:'Alfa Slab One',Georgia,serif;--mono:'Courier Prime',ui-monospace,monospace;--body:'DM Sans',system-ui,sans-serif;
+      --max:1180px;--r:14px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:76px}
+    body{margin:0;background:var(--paper);color:var(--text);font:16px/1.6 var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    img{max-width:100%;display:block}
+    a{color:inherit}
+    button,input,select,textarea{font:inherit;color:inherit}
+    .wrap{width:min(var(--max),calc(100% - 40px));margin:auto}
+    .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+    /* ---------- botões ---------- */
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:2px solid var(--ink);border-radius:999px;background:var(--rust);color:var(--cream);padding:14px 24px;font:700 13px var(--mono);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;cursor:pointer;box-shadow:4px 4px 0 var(--ink);transition:transform .15s,box-shadow .15s,filter .15s}
+    .btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+    .btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+    .btn.gold{background:var(--gold);color:var(--ink)}
+    .btn.blue{background:var(--blue);color:var(--ink)}
+    .btn.ghost{background:transparent;color:var(--cream);border-color:var(--cream);box-shadow:none}
+    .btn.ghost:hover{background:rgba(255,235,180,.08)}
+    .btn.block{width:100%}
+    .btn[disabled]{opacity:.5;pointer-events:none}
+    .chip{display:inline-flex;align-items:center;gap:8px;border:1.5px solid currentColor;border-radius:999px;padding:5px 12px;font:700 11px var(--mono);letter-spacing:.1em;text-transform:uppercase}
+    .chip .dot{width:8px;height:8px;border-radius:50%;background:currentColor}
+    .chip.live{color:#3fae5a}.chip.live .dot{animation:pulse 1.6s infinite}
+    @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(63,174,90,.6)}70%{box-shadow:0 0 0 8px rgba(63,174,90,0)}100%{box-shadow:0 0 0 0 rgba(63,174,90,0)}}
+
+    /* ---------- topo ---------- */
+    .topbar{position:sticky;top:0;z-index:40;background:rgba(15,15,15,.94);backdrop-filter:blur(8px);color:var(--cream);border-bottom:1px solid var(--line-d)}
+    .nav{height:68px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:400 18px var(--display);letter-spacing:.02em;white-space:nowrap}
+    .brand img{width:38px;height:38px;border-radius:50%;object-fit:cover;object-position:center 30%;border:1.5px solid var(--gold)}
+    .brand small{font:700 11px var(--mono);color:var(--gold);letter-spacing:.1em}
+    .nav-links{display:flex;gap:26px}
+    .nav-links a{text-decoration:none;font:700 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+    .nav-links a:hover{color:var(--gold);opacity:1}
+    .nav-actions{display:flex;align-items:center;gap:10px}
+    .nav .btn{padding:10px 18px;box-shadow:none;border-color:var(--gold)}
+    .menu-toggle{display:none;background:none;border:0;color:var(--cream);cursor:pointer;padding:6px}
+
+    /* ---------- hero ---------- */
+    .hero{background:var(--ink);color:var(--cream);position:relative;overflow:hidden}
+    .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;padding:46px 0 64px}
+    .hero-copy{text-align:center}
+    .hero-logo{width:100%;max-width:480px;margin:0 auto 4px;mix-blend-mode:lighten}
+    .hero-faixa{width:100%;max-width:380px;margin:0 auto 20px;mix-blend-mode:lighten}
+    .hero-lead{font-size:18px;color:rgba(255,235,180,.78);max-width:500px;margin:0 auto 26px}
+    .hero-meta{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 22px;font:700 13px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--gold);margin-bottom:26px}
+    .hero-meta span{display:flex;align-items:center;gap:8px}
+    .countdown{display:flex;justify-content:center;gap:10px;margin-bottom:28px}
+    .cd{min-width:74px;text-align:center;border:1.5px solid var(--line-d);border-radius:12px;padding:10px 8px;background:rgba(255,235,180,.04)}
+    .cd b{display:block;font:400 34px/1 var(--display);color:var(--cream)}
+    .cd small{font:700 10px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,235,180,.6)}
+    .hero-actions{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+    .hero-actions .btn{box-shadow:4px 4px 0 var(--gold);border-color:var(--gold)}
+    .hero-actions .btn.ghost{box-shadow:none}
+    .hero-photo{position:relative}
+    .hero-photo img{position:relative;z-index:1;width:100%;max-width:460px;margin:auto;mix-blend-mode:lighten}
+    .lot-badge{position:absolute;z-index:2;left:-26px;bottom:38px;background:var(--cream);color:var(--ink);border:2px solid var(--ink);border-radius:14px;padding:14px 18px;box-shadow:5px 5px 0 var(--rust);transform:rotate(-4deg);max-width:240px}
+    .lot-badge small{display:block;font:700 10px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--rust)}
+    .lot-badge strong{display:block;font:400 22px/1.1 var(--display);margin:4px 0}
+    .lot-badge span{font-size:13px;color:var(--muted)}
+
+    /* ---------- ticker ---------- */
+    .ticker{background:var(--blue);color:var(--ink);border-block:2px solid var(--ink);overflow:hidden;white-space:nowrap;padding:12px 0}
+    .ticker-track{display:inline-flex;animation:tick 32s linear infinite}
+    .ticker span{font:400 20px var(--display);letter-spacing:.04em;text-transform:uppercase;padding-right:28px}
+    .ticker i{font-style:normal;color:var(--rust);padding-right:28px}
+    @keyframes tick{to{transform:translateX(-50%)}}
+
+    /* ---------- seções ---------- */
+    section{padding:96px 0}
+    .kicker{display:inline-block;font:700 12px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--rust);margin:0 0 14px}
+    h2{font:400 clamp(38px,5.6vw,64px)/1 var(--display);margin:0;letter-spacing:-.005em}
+    .section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:44px}
+    .section-head p{max-width:380px;margin:0;color:var(--muted)}
+    .dark{background:var(--ink);color:var(--cream)}
+    .dark .kicker{color:var(--gold)}
+    .dark .section-head p{color:rgba(255,235,180,.65)}
+    .rust{background:var(--rust);color:var(--cream)}
+    .rust .kicker{color:var(--cream);opacity:.8}
+    .rust .section-head p{color:rgba(255,235,180,.75)}
+
+    /* sobre */
+    .about{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
+    .about-copy p{font-size:17px;color:#4a4232}
+    .about-copy strong{color:var(--text)}
+    .note{border-left:4px solid var(--gold);background:var(--paper2);padding:14px 18px;border-radius:0 10px 10px 0;font-weight:500;margin-top:22px}
+    .facts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:34px}
+    .fact{border:2px solid var(--ink);border-radius:var(--r);padding:18px;background:var(--cream)}
+    .fact small{font:700 10px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+    .fact strong{display:block;font:400 22px/1.15 var(--display);margin-top:6px}
+    .about-art{position:relative}
+    .about-art img{margin-inline:auto;border-radius:var(--r);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--rust)}
+
+    /* categorias */
+    .cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .cat{border:1.5px solid var(--line-d);border-radius:var(--r);padding:22px;min-height:210px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .2s,border-color .2s,background .2s}
+    .cat:hover{transform:translateY(-4px);border-color:var(--gold);background:rgba(255,235,180,.04)}
+    .cat-top{display:flex;justify-content:space-between;align-items:center;font:700 11px var(--mono);letter-spacing:.12em;color:var(--gold)}
+    .holds{display:flex;gap:4px}
+    .holds i{width:12px;height:12px;border-radius:50% 40% 55% 45%;border:1px solid rgba(255,255,255,.4)}
+    .cat h3{font:400 28px/1 var(--display);margin:26px 0 8px}
+    .cat p{margin:0;font-size:14px;color:rgba(255,235,180,.7)}
+    .naipes{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+    .naipes span{border:1px solid var(--line-d);border-radius:999px;padding:3px 10px;font:700 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+
+    /* programação */
+    .schedule{display:grid;grid-template-columns:.8fr 1.2fr;gap:60px;align-items:start}
+    .schedule-art{position:sticky;top:100px}
+    .schedule-art img{margin-inline:auto;border-radius:var(--r);border:3px solid var(--ink);max-width:280px;box-shadow:8px 8px 0 var(--rust)}
+    .timeline{list-style:none;margin:0;padding:0;position:relative}
+    .timeline:before{content:"";position:absolute;left:9px;top:8px;bottom:8px;width:2px;background:repeating-linear-gradient(var(--ink) 0 6px,transparent 6px 12px)}
+    .tl{position:relative;padding:0 0 26px 44px}
+    .tl:before{content:"";position:absolute;left:0;top:4px;width:20px;height:20px;border-radius:50%;background:var(--cream);border:2px solid var(--ink)}
+    .tl.hl:before{background:var(--gold)}
+    .tl.final:before{background:var(--rust)}
+    .tl time{font:700 13px var(--mono);letter-spacing:.06em;color:var(--rust)}
+    .tl h3{font:400 22px/1.2 var(--display);margin:2px 0 0}
+    .tl p{margin:4px 0 0;color:var(--muted);font-size:14px}
+
+    /* ingressos */
+    .lots{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+    .lot{position:relative;border:2px solid var(--ink);border-radius:var(--r);background:var(--cream);padding:22px 20px;display:flex;flex-direction:column}
+    .lot h3{font:400 24px/1 var(--display);margin:10px 0 4px}
+    .lot .dates{font:700 12px var(--mono);color:var(--muted);letter-spacing:.04em}
+    .lot .prices{margin:20px 0 0;display:grid;gap:10px}
+    .lot .row{display:flex;justify-content:space-between;align-items:baseline;border-top:1px dashed var(--line);padding-top:10px;font-size:14px}
+    .lot .row b{font:400 26px var(--display)}
+    .lot .status{align-self:flex-start;font:700 10px var(--mono);letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border-radius:999px;background:var(--paper2);color:var(--muted)}
+    .lot.current{background:var(--ink);color:var(--cream);box-shadow:8px 8px 0 var(--rust);transform:translateY(-6px)}
+    .lot.current .status{background:#3fae5a;color:#fff}
+    .lot.current .dates{color:var(--gold)}
+    .lot.current .row{border-color:var(--line-d)}
+    .lot.current .row b{color:var(--cream)}
+    .lot.past{opacity:.5}
+    .lot.past .row b{text-decoration:line-through;text-decoration-thickness:2px}
+    .lot .progress{margin-top:18px}
+    .lot .bar{height:8px;border-radius:4px;background:rgba(255,235,180,.15);overflow:hidden}
+    .lot .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--rust2));border-radius:4px}
+    .lot .progress small{display:block;margin-top:8px;font:700 11px var(--mono);color:var(--gold)}
+    .ticket-controls{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:26px}
+    .toggle{display:inline-flex;border:2px solid var(--ink);border-radius:999px;padding:4px;background:var(--cream)}
+    .toggle button{border:0;background:transparent;border-radius:999px;padding:9px 18px;font:700 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
+    .toggle button[aria-pressed="true"]{background:var(--ink);color:var(--cream)}
+    .ticket-info{display:grid;grid-template-columns:1.2fr .8fr;gap:16px;margin-top:34px}
+    .info-card{border:2px solid var(--ink);border-radius:var(--r);padding:22px;background:var(--paper2)}
+    .info-card h4{font:400 20px var(--display);margin:0 0 10px}
+    .info-card ul{margin:0;padding-left:18px;font-size:14px;color:#4a4232}
+    .info-card li{margin:4px 0}
+    .pix{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:6px}
+    .pix code{font:700 16px var(--mono);background:var(--cream);border:1.5px dashed var(--ink);border-radius:8px;padding:8px 12px}
+    .small-btn{border:1.5px solid var(--ink);background:var(--cream);border-radius:999px;padding:8px 14px;font:700 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
+    .small-btn:hover{background:var(--gold)}
+
+    .tag{position:absolute;top:12px;left:12px;background:var(--blue);color:var(--ink);border:1.5px solid var(--ink);border-radius:999px;padding:4px 10px;font:700 10px var(--mono);letter-spacing:.1em;text-transform:uppercase}
+    .tag.hot{background:var(--rust);color:var(--cream)}
+    .price{font:400 26px var(--display);color:var(--rust)}
+    .price s{font:400 15px var(--body);color:var(--muted);margin-left:6px}
+    .opt-label{font:700 10px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;display:block}
+    .opts{display:flex;flex-wrap:wrap;gap:6px}
+    .opt{min-width:38px;height:36px;padding:0 10px;border:1.5px solid var(--line);border-radius:8px;background:transparent;font:700 12px var(--mono);cursor:pointer}
+    .opt:hover{border-color:var(--ink)}
+    .opt[aria-pressed="true"]{background:var(--ink);color:var(--cream);border-color:var(--ink)}
+
+    /* camiseta */
+    .shirt{display:grid;grid-template-columns:1.1fr .9fr;gap:26px;align-items:start}
+    .shirt-img{border:2px solid var(--cream);border-radius:18px;overflow:hidden;cursor:zoom-in;background:var(--ink)}
+    .shirt-img img{width:100%;aspect-ratio:4/3.4;object-fit:cover;object-position:center}
+    .shirt-card{background:var(--cream);color:var(--ink);border:2px solid var(--ink);border-radius:18px;padding:24px;display:grid;gap:16px}
+    .shirt-card h3{font:400 26px/1.1 var(--display);margin:0}
+    .shirt-card p{margin:0;font-size:14px;color:var(--muted)}
+    .shirt-card .tag{position:static;justify-self:start}
+    .shirt-card .price{font:400 30px var(--display);color:var(--rust)}
+    .single-size{font:700 12px var(--mono);letter-spacing:.06em;color:var(--muted)}
+    .help{font-size:12px;color:var(--muted)}
+    .done{text-align:center;display:grid;gap:10px;padding:10px 0}
+    .done h3{font:400 28px var(--display);margin:0;color:var(--rust)}
+    .done p{margin:0}
+    .done code{font:700 15px var(--mono);background:var(--paper2);border:1.5px dashed var(--ink);border-radius:8px;padding:4px 8px}
+    .lot .promo{align-self:flex-start;margin-top:8px;font:700 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+
+    /* galeria */
+    .gallery{columns:3;column-gap:14px}
+    .gallery figure{margin:0 0 14px;break-inside:avoid;border-radius:var(--r);overflow:hidden;border:2px solid var(--ink);cursor:zoom-in;position:relative}
+    .gallery img{width:100%;transition:transform .5s}
+    .gallery figure:hover img{transform:scale(1.04)}
+    .gallery figcaption{position:absolute;left:10px;bottom:10px;background:var(--cream);border:1.5px solid var(--ink);border-radius:999px;padding:3px 10px;font:700 10px var(--mono);letter-spacing:.08em;text-transform:uppercase}
+
+    /* patrocinadores */
+    .sponsors{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+    .sponsor{aspect-ratio:3/2;border:1.5px dashed rgba(15,15,15,.3);border-radius:12px;display:grid;place-items:center;text-align:center;font:700 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:10px}
+    .sponsor.main{border:2px solid var(--ink);background:var(--ink);color:var(--gold);font:400 20px var(--display);letter-spacing:0;text-transform:none}
+    .sponsor-cta{margin-top:26px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;border:2px solid var(--ink);border-radius:var(--r);padding:22px 24px;background:var(--cream)}
+    .sponsor-cta p{margin:0;max-width:560px}
+    .sponsor-cta strong{font:400 22px var(--display);display:block}
+
+    /* inscrição */
+    .signup-grid{display:grid;grid-template-columns:1.35fr .65fr;gap:26px;align-items:start}
+    .form-card{background:var(--paper);color:var(--text);border:2px solid var(--ink);border-radius:18px;padding:32px;box-shadow:10px 10px 0 var(--ink)}
+    .step{font:400 20px var(--display);margin:6px 0 16px;display:flex;align-items:center;gap:12px}
+    .step b{width:30px;height:30px;border-radius:50%;background:var(--rust);color:var(--cream);display:grid;place-items:center;font:700 14px var(--mono)}
+    .step:not(:first-child){margin-top:30px;padding-top:26px;border-top:1px dashed var(--line)}
+    .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .field{display:flex;flex-direction:column;gap:6px}
+    .field.full{grid-column:1/-1}
+    .field label,.legend{font:700 11px var(--mono);letter-spacing:.1em;text-transform:uppercase}
+    .field input,.field select,.field textarea{width:100%;border:1.5px solid rgba(15,15,15,.25);background:#fffaf0;border-radius:10px;padding:12px 13px;outline:none;transition:border-color .15s,box-shadow .15s}
+    .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--rust);box-shadow:0 0 0 3px rgba(129,35,0,.12)}
+    .field input.invalid{border-color:#c0392b}
+    .err{color:#c0392b;font-size:12px;min-height:0}
+    .choices{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;border:0;padding:0;margin:0}
+    .choices.two{grid-template-columns:repeat(2,1fr)}
+    .choice{position:relative}
+    .choice input{position:absolute;opacity:0}
+    .choice span{display:block;height:100%;border:1.5px solid rgba(15,15,15,.25);border-radius:10px;padding:12px;font-size:14px;font-weight:500;cursor:pointer;background:#fffaf0;transition:.15s}
+    .choice span small{display:block;color:var(--muted);font-size:12px;font-weight:400}
+    .choice input:checked+span{border-color:var(--ink);background:var(--ink);color:var(--cream)}
+    .choice input:checked+span small{color:var(--gold)}
+    .choice input:focus-visible+span{outline:2px solid var(--blue);outline-offset:2px}
+    .kit-fields{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+    .kit-fields[hidden]{display:none}
+    .field label.choice,.field label.consent{font:400 14px/1.5 var(--body);letter-spacing:0;text-transform:none}
+    .consent{display:flex;gap:10px;align-items:flex-start;font-size:14px}
+    .consent input{accent-color:var(--rust);width:18px;height:18px;margin-top:2px;flex:none}
+    .summary{position:sticky;top:96px;background:var(--cream);color:var(--ink);border:2px solid var(--ink);border-radius:18px;padding:24px}
+    .summary h3{font:400 24px var(--display);margin:0 0 4px}
+    .summary .lotname{font:700 12px var(--mono);color:var(--rust);letter-spacing:.06em;text-transform:uppercase}
+    .sum-row{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:14px}
+    .sum-total{display:flex;justify-content:space-between;align-items:baseline;padding:16px 0 6px}
+    .sum-total b{font:400 34px var(--display);color:var(--rust)}
+    .summary .hint{font-size:12px;color:var(--muted);margin:10px 0 0}
+    .summary img{border-radius:12px;margin-top:18px;border:2px solid var(--ink)}
+
+    /* termo */
+    .term{border:2px solid var(--ink);border-radius:var(--r);background:var(--cream);padding:6px 24px}
+    .term summary{cursor:pointer;list-style:none;font:400 22px var(--display);padding:16px 30px 16px 0;position:relative}
+    .term summary::-webkit-details-marker{display:none}
+    .term summary:after{content:"+";position:absolute;right:0;top:10px;font:400 30px var(--display);color:var(--rust)}
+    .term[open] summary:after{content:"−"}
+    .term-content{font-size:14px;color:#4a4232;padding-bottom:20px}
+    .term-content ol{padding-left:22px}.term-content li{padding:4px 0}
+
+    /* local */
+    .local{display:grid;grid-template-columns:.9fr 1.1fr;gap:30px;align-items:stretch}
+    .local-card{border:2px solid var(--cream);border-radius:18px;padding:30px;display:flex;flex-direction:column;gap:16px}
+    .local-card h3{font:400 30px/1.1 var(--display);margin:0}
+    .local-card address{font-style:normal;font-size:17px;color:rgba(255,235,180,.85)}
+    .local-card ul{margin:0;padding-left:18px;color:rgba(255,235,180,.75);font-size:14px}
+    .map{border:2px solid var(--cream);border-radius:18px;overflow:hidden;min-height:380px;background:#222}
+    .map iframe{width:100%;height:100%;min-height:380px;border:0;filter:grayscale(.3) contrast(1.05)}
+
+    /* faq */
+    .faq{display:grid;grid-template-columns:.7fr 1.3fr;gap:60px}
+    .faq-list details{border-bottom:1.5px solid var(--line)}
+    .faq-list summary{list-style:none;cursor:pointer;padding:20px 36px 20px 0;font-weight:700;font-size:17px;position:relative}
+    .faq-list summary::-webkit-details-marker{display:none}
+    .faq-list summary:after{content:"+";position:absolute;right:4px;top:14px;font:400 26px var(--display);color:var(--rust);transition:transform .2s}
+    .faq-list details[open] summary:after{transform:rotate(45deg)}
+    .faq-list p{margin:0 0 20px;color:var(--muted)}
+
+    /* rodapé */
+    .footer{background:var(--ink);color:var(--cream);padding:60px 0 100px}
+    .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
+    .footer img.flogo{max-width:300px}
+    .choice input:disabled+span{opacity:.45;cursor:not-allowed}
+    .footer h4{font:700 12px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:0 0 12px}
+    .footer a{display:block;text-decoration:none;opacity:.8;margin:6px 0}
+    .footer a:hover{opacity:1;color:var(--gold)}
+    .footer-bottom{border-top:1px solid var(--line-d);margin-top:40px;padding-top:18px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font:400 12px var(--mono);color:rgba(255,235,180,.5)}
+
+    .icon-btn{background:none;border:0;cursor:pointer;color:inherit;padding:6px;font-size:22px;line-height:1}
+
+    /* lightbox */
+    .lightbox{position:fixed;inset:0;z-index:70;background:rgba(15,15,15,.92);display:none;place-items:center;padding:30px}
+    .lightbox.open{display:grid}
+    .lightbox img{margin:auto;max-height:86vh;max-width:min(1100px,100%);border-radius:12px;border:2px solid var(--cream)}
+    .lightbox .icon-btn{position:absolute;top:16px;right:20px;color:var(--cream);font-size:32px}
+
+    /* flutuantes */
+    .mobile-cta{display:none}
+    .toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,120px);z-index:80;background:var(--ink);color:var(--cream);border:2px solid var(--gold);border-radius:999px;padding:12px 20px;font:700 13px var(--mono);transition:transform .3s cubic-bezier(.2,.8,.2,1);max-width:calc(100% - 32px);text-align:center}
+    .toast.show{transform:translate(-50%,0)}
+
+    /* animação de entrada */
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+    .reveal.in{opacity:1;transform:none}
+
+    @media (max-width:1000px){
+      .nav-links{gap:16px}.nav-links a{font-size:11px}
+      .lots{grid-template-columns:repeat(2,1fr)}
+      .lot.current{transform:none}
+      .cat-grid{grid-template-columns:repeat(2,1fr)}
+      .sponsors{grid-template-columns:repeat(3,1fr)}
+      .signup-grid{grid-template-columns:1fr}
+      .summary{position:static}
+      .summary img{display:none}
+    }
+    @media (max-width:860px){
+      .menu-toggle{display:block}
+      .nav-links{display:none;position:absolute;top:68px;left:0;right:0;background:var(--ink);flex-direction:column;gap:0;padding:8px 20px 18px;border-bottom:1px solid var(--line-d)}
+      .nav-links.open{display:flex}
+      .nav-links a{padding:13px 0;font-size:13px;border-bottom:1px solid var(--line-d)}
+      .nav .btn{display:none}
+      .hero-grid{grid-template-columns:1fr;padding:26px 0 50px;gap:34px}
+      .hero-photo{max-width:420px;margin:0 auto 10px;width:88%}
+      .lot-badge{left:-18px;bottom:24px}
+      .about,.schedule,.local,.faq,.ticket-info,.shirt{grid-template-columns:1fr;gap:34px}
+      .schedule-art{position:static}
+      .schedule-art img{max-width:200px}
+      .gallery{columns:2}
+      .footer-grid{grid-template-columns:1fr}
+    }
+    @media (max-width:600px){
+      .wrap{width:calc(100% - 32px)}
+      section{padding:68px 0}
+      .section-head{display:block;margin-bottom:30px}
+      .section-head p{margin-top:14px}
+      .brand span.txt{font-size:15px}
+      .brand small{display:none}
+      .hero-lead{font-size:16px}
+      .countdown{gap:6px}
+      .cd{min-width:0;flex:1;padding:8px 4px}
+      .cd b{font-size:26px}
+      .hero-actions .btn{flex:1}
+      .cat-grid{gap:10px}
+      .cat{min-height:180px;padding:16px}
+      .cat h3{font-size:22px;margin-top:18px}
+      .cat p{font-size:13px}
+      .lots{grid-template-columns:1fr}
+      .sponsors{grid-template-columns:repeat(2,1fr)}
+      .form-card{padding:22px 16px;box-shadow:6px 6px 0 var(--ink)}
+      .fgrid,.kit-fields{grid-template-columns:1fr}
+      .choices{grid-template-columns:1fr}
+      .choices.two{grid-template-columns:1fr 1fr}
+      .gallery{columns:1}
+      .mobile-cta{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:45;gap:10px;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:rgba(15,15,15,.96);border-top:1px solid var(--line-d);transform:translateY(110%);transition:transform .3s}
+      .mobile-cta.show{transform:none}
+      .mobile-cta .btn{flex:1;padding:12px;box-shadow:none;border-color:var(--gold)}
+      .mobile-cta .info{color:var(--cream);font:700 11px/1.3 var(--mono);display:flex;flex-direction:column;justify-content:center}
+      .mobile-cta .info b{color:var(--gold);font-size:14px}
+      .toast{bottom:90px}
+    }
+    @media (prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      *,*:before,*:after{animation:none!important;transition:none!important}
+      .reveal{opacity:1;transform:none}
+    }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <nav class="nav wrap" aria-label="Navegação principal">
+    <a class="brand" href="#inicio"><img src="assets/brasao.jpg" alt=""><span class="txt">Open Boulder</span><small>2026</small></a>
+    <div class="nav-links" id="nav-links">
+      <a href="#sobre">O evento</a><a href="#categorias">Categorias</a><a href="#programacao">Programação</a><a href="#ingressos">Ingressos</a><a href="#camiseta">Camiseta</a><a href="#local">Local</a><a href="#faq">Dúvidas</a>
+    </div>
+    <div class="nav-actions">
+      <a class="btn" href="#inscricao">Inscreva-se</a>
+      <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-links">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero" id="inicio" aria-labelledby="hero-title" style="padding:0">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <h1 id="hero-title" class="sr">Eleva Open Boulder 2026 — Climb das Antigas</h1>
+        <img class="hero-logo" src="assets/logo.jpg" alt="Eleva Open Boulder 2026" width="1400" height="620">
+        <img class="hero-faixa" src="assets/faixa.jpg" alt="Climb das Antigas" width="1400" height="322">
+        <p class="hero-lead">Edição especial de 8 anos de Eleva. Bouldinhos settados a dedo, música, prêmios, comida e muita resenha.</p>
+        <div class="hero-meta">
+          <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Sábado · 12 dez 2026</span>
+          <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>Eleva · Guará, Brasília</span>
+        </div>
+        <div class="countdown" id="countdown" aria-label="Contagem regressiva para o evento">
+          <div class="cd"><b data-cd="d">--</b><small>dias</small></div>
+          <div class="cd"><b data-cd="h">--</b><small>horas</small></div>
+          <div class="cd"><b data-cd="m">--</b><small>min</small></div>
+          <div class="cd"><b data-cd="s">--</b><small>seg</small></div>
+        </div>
+        <div class="hero-actions">
+          <a class="btn" href="#inscricao">Garantir minha vaga</a>
+          <a class="btn ghost" href="#camiseta">Ver a camiseta</a>
+        </div>
+      </div>
+      <div class="hero-photo">
+        <img src="assets/brasao.jpg" alt="Brasão oficial Open Boulder Eleva 2026" width="1070" height="1340">
+        <div class="lot-badge" id="hero-lot">
+          <small id="hero-lot-kicker">Ingressos à venda</small>
+          <strong id="hero-lot-name">1º lote</strong>
+          <span id="hero-lot-info">a partir de R$ 80</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ticker" aria-hidden="true"><div class="ticker-track" id="ticker"></div></div>
+
+  <!-- SOBRE -->
+  <section id="sobre">
+    <div class="wrap about">
+      <div class="reveal">
+        <p class="kicker">Edição especial · 8 anos de Eleva</p>
+        <h2>Mais que um campeonato.</h2>
+        <div class="about-copy">
+          <p><strong>Alô, escalamonstros e escalamonstras!</strong> Rebobina a fita que vem aí mais uma edição do <strong>Eleva Open Boulder</strong>, o melhor e mais esperado evento da Eleva. Edição especial de <strong>8 anos de Eleva</strong>, no estilo <strong>Climb das Antigas</strong>.</p>
+          <p>Vai ter bouldinhos settados a dedo, música, prêmios, comida e muita resenha. E, se quiser eternizar esse momento, ainda dá para garantir uma das camisetas mais lindas de todos os tempos.</p>
+          <div class="note">Depois das baterias, fica para a música, a comida e o happy hour. A festa também faz parte do rolê.</div>
+        </div>
+        <div class="facts">
+          <div class="fact"><small>Quando</small><strong>12 de dezembro</strong></div>
+          <div class="fact"><small>Onde</small><strong>Eleva · Guará</strong></div>
+          <div class="fact"><small>Formato adulto</small><strong>Bateria única + final</strong></div>
+          <div class="fact"><small>Depois</small><strong>Happy hour ♡</strong></div>
+        </div>
+      </div>
+      <div class="about-art reveal"><img src="assets/poster.jpg" alt="Pôster Eleva Open Boulder 2026 — Climb das Antigas, dia 12 de dezembro" loading="lazy" width="1400" height="1128"></div>
+    </div>
+  </section>
+
+  <!-- CATEGORIAS -->
+  <section class="dark" id="categorias">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div><p class="kicker">Todo mundo tem seu lugar</p><h2>Escolha sua categoria.</h2></div>
+        <p>Uma categoria para cada momento da sua jornada. As cores indicam os boulders da academia que você já manda.</p>
+      </div>
+      <div class="cat-grid" id="cat-grid"></div>
+    </div>
+  </section>
+
+  <!-- PROGRAMAÇÃO -->
+  <section id="programacao">
+    <div class="wrap schedule">
+      <div class="schedule-art reveal">
+        <p class="kicker">O dia inteiro em movimento</p>
+        <h2 style="margin-bottom:26px">Programação.</h2>
+        <img src="assets/brasao-dourado.jpg" alt="Brasão oficial Open Boulder Eleva 2026" loading="lazy" width="1070" height="1390">
+      </div>
+      <ol class="timeline reveal">
+        <li class="tl"><time>08h00 – 09h30</time><h3>Festival Infantil</h3><p>E entrega de medalhas para as pequenas grandes máquinas.</p></li>
+        <li class="tl hl"><time>09h40 – 14h40</time><h3>Festival Adulto</h3><p>Bateria única, com sorteios.</p></li>
+        <li class="tl"><time>14h45 – 17h45</time><h3>DJ Jess Ullun</h3><p>Música enquanto os boulders da final são remontados.</p></li>
+        <li class="tl"><time>17h30 – 18h30</time><h3>Isolamento e briefing técnico</h3><p>Finalistas se preparam.</p></li>
+        <li class="tl final"><time>18h40 – 20h20</time><h3>Etapa final do campeonato</h3><p>Com DJ e torcida.</p></li>
+        <li class="tl hl"><time>20h45</time><h3>Resultados e premiação</h3><p>Pódio de todas as categorias, com DJ.</p></li>
+        <li class="tl"><time>21h15</time><h3>Happy hour :)</h3><p>A comemoração continua.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- INGRESSOS -->
+  <section id="ingressos" style="background:var(--paper2)">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div><p class="kicker">Quanto antes, melhor</p><h2>Ingressos por lote.</h2></div>
+        <p>O lote vira na data indicada ou quando as vagas do lote acabarem, o que acontecer primeiro. Garanta o seu no valor de hoje.</p>
+      </div>
+      <div class="ticket-controls reveal">
+        <div class="toggle" role="group" aria-label="Mostrar valores">
+          <button type="button" data-kit="0" aria-pressed="false">Sem camiseta</button>
+          <button type="button" data-kit="1" aria-pressed="true">Com camiseta</button>
+        </div>
+        <span class="chip live" id="live-chip"><span class="dot"></span><span id="live-chip-txt">Lote atual</span></span>
+      </div>
+      <div class="lots reveal" id="lots"></div>
+      <div class="ticket-info reveal">
+        <div class="info-card">
+          <h4>Como funciona</h4>
+          <ul>
+            <li><b>Aluno Eleva</b> (com plano ativo) paga o valor de aluno; diaristas e outras academias pagam o valor geral.</li>
+            <li><b>Com camiseta</b>: inclui a camiseta oficial Climb das Antigas no modelo que você escolher (infantil regata, cropped regata, cropped com manga, camiseta regata ou camiseta com manga), retirada no dia do evento.</li>
+            <li><b>Só a camiseta</b>, sem inscrição: R$ 90 em qualquer lote, na seção <a href="#camiseta">Camiseta</a>.</li>
+            <li><b>Lote promocional</b> (29/10): só com camiseta.</li>
+            <li>Em todas as formas de pagamento, anexe o comprovante no formulário. A organização confere e confirma a inscrição.</li>
+            <li>Em caso de cancelamento do evento por segurança, vale o previsto no termo de responsabilidade.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h4>Pague via Pix</h4>
+          <p style="margin:0 0 8px;font-size:14px;color:#4a4232">Chave CNPJ · DFM Esportes LTDA</p>
+          <div class="pix"><code id="pixkey">31.288.290/0001-44</code><button class="small-btn" type="button" data-copy-pix>Copiar</button></div>
+          <p style="margin:12px 0 0;font-size:14px;color:#4a4232">Também aceitamos débito, crédito, dinheiro ou Pix na recepção da academia.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAMISETA -->
+  <section class="dark" id="camiseta">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div><p class="kicker">Eternize esse momento</p><h2>Camiseta oficial.</h2></div>
+        <p>Arte exclusiva do Estúdio Avoada para os 8 anos de Eleva. Só na cor preta, em edição limitada.</p>
+      </div>
+      <div class="shirt reveal">
+        <div class="shirt-img" data-zoom="assets/camiseta-rocha.jpg"><img src="assets/camiseta-rocha.jpg" alt="Camiseta oficial preta com o brasão Climb das Antigas nas costas" loading="lazy" width="1800" height="1005"></div>
+        <form class="shirt-card" id="shirt-form" novalidate>
+          <span class="tag hot">Mesmo valor em qualquer lote</span>
+          <h3>Camiseta preta Climb das Antigas</h3>
+          <span class="price">R$ 90</span>
+          <p>Quer só a camiseta, sem se inscrever? Escolha o modelo e faça o pedido aqui. Quem se inscreve com camiseta já recebe a sua inclusa.</p>
+          <div><span class="opt-label">Modelo</span><div class="opts" id="shirt-mods"></div></div>
+          <div><span class="opt-label">Tamanho</span><div class="opts" id="shirt-tams"></div><span class="err" id="shirt-tam-err"></span></div>
+          <div class="fgrid">
+            <div class="field full"><label for="s-nome">Nome completo</label><input id="s-nome" autocomplete="name" required><span class="err"></span></div>
+            <div class="field"><label for="s-telefone">Celular</label><input id="s-telefone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(61) 90000-0000" required><span class="err"></span></div>
+            <div class="field"><label for="s-email">E-mail</label><input id="s-email" type="email" autocomplete="email" placeholder="voce@email.com" required><span class="err"></span></div>
+            <div class="field full"><label for="s-pagamento">Como vai pagar?</label><select id="s-pagamento" required><option value="">Selecione</option><option>Pix (anexo o comprovante)</option><option>Pix na recepção</option><option>Débito na recepção</option><option>Crédito na recepção</option><option>Dinheiro na recepção</option></select><span class="err"></span></div>
+            <div class="field full"><label for="s-comprovante">Comprovante <span style="text-transform:none;font-weight:400;letter-spacing:0">(foto ou PDF, até 5 MB)</span></label><input id="s-comprovante" type="file" accept="image/*,application/pdf"><span class="err"></span><small class="help">Obrigatório no Pix. Pagando na recepção, pode anexar depois ou mostrar na retirada.</small></div>
+          </div>
+          <button class="btn gold block" type="submit">Pedir camiseta</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERIA -->
+  <section id="galeria">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div><p class="kicker">Identidade 2026</p><h2>Climb das Antigas.</h2></div>
+        <p>Toda a arte do Open 2026, criada pelo Estúdio Avoada. Toque numa imagem para ampliar.</p>
+      </div>
+      <div class="gallery reveal" id="gallery"></div>
+    </div>
+  </section>
+
+  <!-- PATROCINADORES -->
+  <section id="patrocinadores" style="padding-top:20px">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div><p class="kicker">Quem faz acontecer</p><h2>Parceiros.</h2></div>
+        <p>Marcas que sobem junto com a comunidade.</p>
+      </div>
+      <div class="sponsors reveal">
+        <div class="sponsor main">Eleva</div>
+        <div class="sponsor main" style="background:var(--rust);color:var(--cream)">Estúdio Avoada</div>
+        <div class="sponsor">Sua marca aqui</div>
+        <div class="sponsor">Sua marca aqui</div>
+        <div class="sponsor">Sua marca aqui</div>
+      </div>
+      <div class="sponsor-cta reveal">
+        <p><strong>Quer patrocinar o Open?</strong>Coloque sua marca na frente de centenas de escaladores, na camiseta, na parede e nas redes.</p>
+        <a class="btn gold" href="https://www.instagram.com/elevaescalada/" target="_blank" rel="noopener">Fale com a gente no Instagram</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSCRIÇÃO -->
+  <section class="rust" id="inscricao">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div><p class="kicker">Seu próximo passo começa aqui</p><h2>Inscrição.</h2></div>
+        <p>Preencha em 2 minutos. Sua inscrição fica registrada na hora e a organização confirma depois de conferir o pagamento.</p>
+      </div>
+      <div class="signup-grid">
+        <form class="form-card" id="signup" novalidate>
+          <h3 class="step"><b>1</b>Seus dados</h3>
+          <div class="fgrid">
+            <div class="field full"><label for="nome">Nome completo</label><input id="nome" name="nome" autocomplete="name" placeholder="Como está no documento" required><span class="err"></span></div>
+            <div class="field"><label for="telefone">Celular</label><input id="telefone" name="telefone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(61) 90000-0000" required><span class="err"></span></div>
+            <div class="field"><label for="email">E-mail</label><input id="email" name="email" type="email" autocomplete="email" placeholder="voce@email.com" required><span class="err"></span></div>
+            <div class="field"><label for="cpf">CPF</label><input id="cpf" name="cpf" inputmode="numeric" placeholder="000.000.000-00" required><span class="err"></span></div>
+            <div class="field"><label for="nascimento">Data de nascimento</label><input id="nascimento" name="nascimento" type="date" required><span class="err"></span></div>
+          </div>
+
+          <h3 class="step"><b>2</b>Categoria</h3>
+          <div class="fgrid">
+            <div class="field"><label for="categoria">Em qual categoria você vai?</label><select id="categoria" name="categoria" required></select><span class="err"></span></div>
+            <div class="field"><label for="naipe">Masculino ou feminino?</label><select id="naipe" name="naipe" required></select><span class="err"></span></div>
+            <div class="field full"><span class="legend">Você é aluno Eleva?</span>
+              <fieldset class="choices">
+                <label class="choice"><input type="radio" name="vinculo" value="Aluno Eleva (plano ativo)" data-aluno="1" required><span>Sim, tenho plano<small>Valor de aluno</small></span></label>
+                <label class="choice"><input type="radio" name="vinculo" value="Diarista Eleva" data-aluno="0"><span>Sou diarista<small>Valor geral</small></span></label>
+                <label class="choice"><input type="radio" name="vinculo" value="Outra academia" data-aluno="0"><span>Outra academia<small>Valor geral</small></span></label>
+              </fieldset>
+            </div>
+          </div>
+
+          <h3 class="step"><b>3</b>Camiseta</h3>
+          <fieldset class="choices two">
+            <label class="choice"><input type="radio" name="kit" value="1" checked><span>Com camiseta<small data-kit-price>camiseta oficial inclusa</small></span></label>
+            <label class="choice"><input type="radio" name="kit" value="0"><span>Sem camiseta<small data-sem-price>só a inscrição</small></span></label>
+          </fieldset>
+          <div class="kit-fields" id="kit-fields">
+            <div class="field"><label for="modelo">Modelo (camiseta preta)</label><select id="modelo" name="modelo"></select><small class="help" id="tam-unico" hidden></small></div>
+            <div class="field" id="tamanho-field"><label for="tamanho">Tamanho</label><select id="tamanho" name="tamanho"></select><span class="err"></span></div>
+          </div>
+
+          <h3 class="step"><b>4</b>Pagamento e termo</h3>
+          <div class="fgrid">
+            <div class="field full"><label for="pagamento">Como vai pagar?</label><select id="pagamento" name="pagamento" required><option value="">Selecione</option><option>Pix (anexo o comprovante)</option><option>Pix na recepção</option><option>Débito na recepção</option><option>Crédito na recepção</option><option>Dinheiro na recepção</option></select><span class="err"></span></div>
+            <div class="field full"><label for="comprovante">Comprovante <span style="text-transform:none;font-weight:400;letter-spacing:0">(foto ou PDF, até 5 MB)</span></label><input id="comprovante" name="comprovante" type="file" accept="image/*,application/pdf"><span class="err"></span><small class="help">Obrigatório no Pix. Pagando na recepção, pode anexar depois ou mostrar no check-in.</small></div>
+            <div class="field full"><label for="obs">Observações <span style="text-transform:none;font-weight:400;letter-spacing:0">(opcional)</span></label><textarea id="obs" name="obs" rows="2" placeholder="Ex.: condição de saúde, responsável pelo menor, necessidade de acessibilidade…"></textarea></div>
+            <div class="field full"><label class="consent"><input type="checkbox" id="termo-ok" required><span>Li e concordo com o <a href="#termo">Termo de Responsabilidade</a> e com o regulamento do campeonato.</span></label><span class="err"></span></div>
+          </div>
+          <div style="margin-top:26px"><button class="btn block" type="submit">Enviar inscrição</button></div>
+        </form>
+
+        <aside class="summary" aria-live="polite">
+          <span class="lotname" id="sum-lot">1º lote</span>
+          <h3>Resumo</h3>
+          <div class="sum-row"><span id="sum-ticket-label">Inscrição (geral)</span><b id="sum-ticket">R$ 0</b></div>
+          
+          <div class="sum-total"><span>Total</span><b id="sum-total">R$ 0</b></div>
+          <p class="hint" id="sum-hint">Valor calculado pelo lote vigente hoje.</p>
+          <img src="assets/inscricoes.jpg" alt="Inscrições abertas — Eleva Open Boulder, 12 de dezembro" loading="lazy">
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- TERMO -->
+  <section id="termo" style="padding-bottom:40px">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div><p class="kicker">Leia antes de participar</p><h2>Termo de responsabilidade.</h2></div>
+        <p>Obrigatório para todos os participantes. Para menores de idade, o responsável legal assina.</p>
+      </div>
+      <details class="term reveal"><summary>Ler o termo completo</summary><div class="term-content">
+        <p>A DFM Esportes LTDA, conhecida por seu nome fantasia “Eleva Academia de Escalada”, é uma empresa privada, inscrita no CNPJ sob o nº 31.288.290/0001-44, com sede no SOF SUL QUADRA 11 CONJUNTO B LOJA 70, Zona Industrial Guará, Brasília DF, CEP 71.215-257, tendo como uma de suas principais atividades a prática de escalada, expõe e esclarece os RISCOS envolvidos nas atividades, a saber:</p>
+        <ol>
+          <li>Por sua natureza, a prática de escalada implica perigo e riscos de lesões corporais e/ou fraturas leves, graves ou gravíssimas decorrentes da prática do esporte.</li>
+          <li>Eu, praticante de esportes radicais, e/ou o menor por mim representado acima discriminado(s), declaro e asseguro para os devidos fins:
+            <ol type="a">
+              <li>Estar ciente dos riscos da prática destas atividades (Escalada, procedimentos verticais), assumindo integralmente as responsabilidades civis e criminais por eventuais danos que possam ocorrer à minha pessoa ou a terceiros durante a minha permanência no interior.</li>
+              <li>Estar totalmente capacitado para atuar na atividade de esportes radicais a que me proponho, ciente de que não posso efetuar determinadas manobras ou ações e estou preparado para agir adequadamente em situações de emergência.</li>
+              <li>Apresentar boa saúde e não possuir qualquer condição médica ou enfermidade que exija atenção especial; não realizar tratamento médico que possa ser inviabilizado durante a prática desportiva; não portar enfermidade que inviabilize ou dificulte minha participação nas referidas atividades; e ter informado, por escrito, qualquer condição médica que possua, diferente da normalidade, bem como doenças preexistentes e/ou uso de medicamentos.</li>
+              <li>Estar apto a participar da atividade escolhida e assegurar que eu próprio ou o menor por mim representado está em excelentes condições físicas e psicológicas, sendo perfeitamente responsável por todos os atos praticados.</li>
+              <li>Assegurar ainda que não fiz uso de bebida alcoólica ou qualquer outra substância toxicológica que venha a influir na atividade esportiva e/ou recreativa.</li>
+              <li>Isentar a DFM Esportes LTDA, assim como seus sócios, empregados e prepostos sob qualquer vínculo, patrocinadores, apoiadores, anunciantes e voluntários de toda e qualquer responsabilidade legal, responsabilizando-me por todo e qualquer dano material, físico e/ou moral causados a mim ou a terceiros.</li>
+              <li>Declarar que verifiquei os locais e os materiais que usarei para praticar meu esporte e que, ao assinar o presente termo, os mesmos se encontram em perfeito estado de conservação, sem quaisquer problemas que impeçam ou dificultem a prática de esporte.</li>
+              <li>Ter ciência de que devo obedecer e respeitar os comandos e orientações dos professores e monitores em todos os momentos.</li>
+              <li>Estar ciente de que cabe à DFM Esportes LTDA o direito de cancelar ou modificar as atividades a qualquer momento, sem aviso prévio, seja por motivos de segurança ou quaisquer outros. Neste caso, nenhum reembolso, restituição do valor pago para a prática das atividades ou indenização será requerido por mim, por meus outorgados legais, herdeiros ou familiares.</li>
+            </ol>
+          </li>
+          <li>Autorizo o uso da minha imagem, e/ou do menor por mim representado, para fins de divulgação e publicidade no site, redes sociais e material de divulgação da DFM Esportes LTDA.</li>
+          <li>Declaro expressamente, e sob as penas da lei, que a DFM Esportes LTDA não tem responsabilidade ou obrigação de reparar ou indenizar eventuais danos ou acidentes que eu venha a sofrer ao praticar o esporte e/ou recreação a que me propus, inclusive que acabem por ocasionar qualquer tipo de lesão corporal, sequela ou falecimento, mesmo que causado por terceiro, especialmente por se tratar de esporte/recreação de risco, e porque estou devidamente ciente, informado e orientado dos procedimentos e das consequências daí advindas.</li>
+          <li>Pelas informações acima, responsabilizo-me integralmente quanto à sua veracidade, as quais visam manter a minha segurança e bem-estar, assim como a de terceiros.</li>
+        </ol>
+      </div></details>
+    </div>
+  </section>
+
+  <!-- LOCAL -->
+  <section class="dark" id="local">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div><p class="kicker">Como chegar</p><h2>Local.</h2></div>
+        <p>O Open acontece na casa da comunidade: a Eleva Academia de Escalada, no Guará.</p>
+      </div>
+      <div class="local reveal">
+        <div class="local-card">
+          <h3>Eleva Academia de Escalada</h3>
+          <address>SOF Sul, Quadra 11, Conjunto B, Loja 70<br>Zona Industrial Guará · Brasília – DF<br>CEP 71215-257</address>
+          <ul>
+            <li>Chegue com 30 min de antecedência para o check-in.</li>
+            <li>Traga documento com foto e sua sapatilha.</li>
+            <li>Leve garrafinha: tem ponto de água no local.</li>
+          </ul>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:auto">
+            <a class="btn gold" id="maps-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Eleva+Academia+de+Escalada+SOF+Sul+Quadra+11+Guar%C3%A1+Bras%C3%ADlia">Abrir no Maps</a>
+            <a class="btn ghost" target="_blank" rel="noopener" href="https://waze.com/ul?q=Eleva%20Academia%20de%20Escalada%20Guar%C3%A1%20Bras%C3%ADlia">Waze</a>
+          </div>
+        </div>
+        <div class="map"><iframe title="Mapa: Eleva Academia de Escalada" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=Eleva%20Academia%20de%20Escalada%2C%20SOF%20Sul%20Quadra%2011%2C%20Guar%C3%A1%2C%20Bras%C3%ADlia&z=16&output=embed"></iframe></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="wrap faq">
+      <div class="reveal"><p class="kicker">Informações importantes</p><h2>Antes de vir.</h2>
+        <p style="color:var(--muted);margin-top:18px">Ficou alguma dúvida? Fale com a gente.</p>
+        <a class="btn" href="https://www.instagram.com/elevaescalada/" target="_blank" rel="noopener">Falar no Instagram</a>
+      </div>
+      <div class="faq-list reveal">
+        <details><summary>Já peguei pódio na Iniciante ou Intermediário. E agora?</summary><p>Quem já pegou pódio nessas categorias em edições anteriores deve subir de categoria. A equipe conhece os escaladores e pode ajustar a categoria no dia.</p></details>
+        <details><summary>Como confirmo minha inscrição?</summary><p>Preencha o formulário e anexe o comprovante do pagamento. Ao enviar, você recebe um código. A organização confere o pagamento e confirma sua vaga.</p></details>
+        <details><summary>Como funciona a virada de lote?</summary><p>Cada lote tem uma data limite e um número de vagas. Quando um dos dois acaba, entra o próximo lote. O valor que vale é o do dia em que você paga.</p></details>
+        <details><summary>Quando sai o regulamento?</summary><p>O regulamento é divulgado no Instagram <a href="https://www.instagram.com/elevaescalada/" target="_blank" rel="noopener">@elevaescalada</a> no dia 05/12, uma semana antes do evento. Fiquem ligados!</p></details>
+        <details><summary>Posso comprar só a camiseta?</summary><p>Pode. A camiseta preta custa R$ 90 em qualquer lote. Faça o pedido na seção <a href="#camiseta">Camiseta</a> aqui do site.</p></details>
+        <details><summary>Posso ir só para assistir?</summary><p>Pode e deve! A torcida faz parte do Open. Tem comida, bebida, música e happy hour. A entrada para a torcida é livre.</p></details>
+        <details><summary>Quando retiro a camiseta?</summary><p>Na recepção da Eleva a partir da semana do evento, ou no check-in do dia 12/12. Leve o código da inscrição ou do pedido.</p></details>
+        <details><summary>Menor de idade pode participar?</summary><p>Sim, nas categorias Infantil e Funfarra (e nas adultas, conforme o nível). O responsável legal precisa aceitar o termo e acompanhar o menor.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div><img class="flogo" src="assets/logo.jpg" alt="Eleva Open Boulder 2026" loading="lazy"><p style="opacity:.7;max-width:340px">12 de dezembro de 2026 · Eleva Academia de Escalada, Guará — Brasília.</p></div>
+      <div><h4>Navegue</h4><a href="#ingressos">Ingressos</a><a href="#camiseta">Camiseta</a><a href="#programacao">Programação</a><a href="#local">Como chegar</a></div>
+      <div><h4>Fale com a gente</h4><a href="https://www.instagram.com/elevaescalada/" target="_blank" rel="noopener">Instagram @elevaescalada</a></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 Eleva Open Boulder · DFM Esportes LTDA</span><span>Arte: Estúdio Avoada</span></div>
+  </div>
+</footer>
+
+<div class="mobile-cta" id="mobile-cta">
+  <div class="info"><span id="m-lot">1º lote</span><b id="m-price">a partir de R$ 80</b></div>
+  <a class="btn" href="#inscricao">Inscreva-se</a>
+</div>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Imagem ampliada"><button class="icon-btn" id="lb-close" aria-label="Fechar">✕</button><img id="lb-img" alt=""></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* =====================================================================
+   CONFIGURAÇÃO — edite aqui sem mexer no resto da página
+   ===================================================================== */
+const CONFIG = {
+  // Supabase: o site só grava inscrições e pedidos (tabela eleva_inscricoes, bucket comprovantes)
+  supabase: { url: 'https://tkewhxjfmjcorhsfiuen.supabase.co', key: 'sb_publishable_DgD_d-lKhm4qydg0RoMJXQ_sdO0tGn9' },
+  evento: '2026-12-12T08:00:00-03:00',
+  pix: '31.288.290/0001-44',
+  // Lotes 2026 — "ate" é o último dia (inclusive); "ateHora" encerra antes do fim do dia.
+  // geral/aluno = sem camiseta (null = lote só com camiseta); geralKit/alunoKit = com camiseta
+  lotes: [
+    { nome: 'Lote promocional', de: '2026-10-29', ate: '2026-10-29', geral: null, aluno: null, geralKit: 110, alunoKit: 100 },
+    { nome: '1º lote',          de: '2026-10-31', ate: '2026-11-09', geral: 90,  aluno: 80,  geralKit: 130, alunoKit: 120 },
+    { nome: '2º lote',          de: '2026-11-10', ate: '2026-11-24', geral: 105, aluno: 95,  geralKit: 145, alunoKit: 135 },
+    { nome: '3º lote',          de: '2026-11-25', ate: '2026-12-11', geral: 120, aluno: 110, geralKit: 160, alunoKit: 150 },
+    { nome: 'Lote final',       de: '2026-12-12', ate: '2026-12-12', ateHora: '12:00:00', geral: 140, aluno: 125, geralKit: 175, alunoKit: 165 },
+  ],
+  camiseta: 90, // só a camiseta, sem inscrição, em qualquer lote
+  // modelos da camiseta oficial (todas pretas)
+  modelos: [
+    { nome: 'Camiseta com manga', tamanhos: ['P','M','G','GG'] },
+    { nome: 'Camiseta regata',    tamanhos: ['P','M','G','GG'] },
+    { nome: 'Cropped com manga',  tamanhos: ['U'] },
+    { nome: 'Cropped regata',     tamanhos: ['U'] },
+    { nome: 'Infantil regata',    tamanhos: ['8 a 12 anos'] },
+  ],
+  categorias: [
+    { n:'01', grupo:'Festival', nome:'Infantil', desc:'Para as nossas pequenas grandes máquinas.', holds:[] },
+    { n:'02', grupo:'Festival', nome:'Funfarra', desc:'Para você que só quer se divertir, sem competir.', holds:[] },
+    { n:'03', grupo:'Adulto', nome:'Iniciante', desc:'Para quem manda os boulders pretos, verdes e rosas.', holds:['#111','#3aa655','#ff7eb6'] },
+    { n:'04', grupo:'Adulto', nome:'Intermediário', desc:'Para quem manda os laranjas, roxos, amarelos e alguns brancos.', holds:['#ff8a1f','#8a4fd8','#ffd23f','#fff'] },
+    { n:'05', grupo:'Adulto', nome:'Master', desc:'Para quem manda os amarelos, azuis, vermelhos e brancos.', holds:['#ffd23f','#3a7bff','#e23b2e','#fff'] },
+    { n:'06', grupo:'40+', nome:'Sênior', desc:'Para quem manda boulders há mais tempo. A categoria oficial da galera das antigas.', holds:[] },
+    { n:'07', grupo:'Acessível', nome:'Paraclimb', desc:'Para quem tem alguma deficiência física.', holds:[] },
+  ],
+  naipes: ['Masculino','Feminino'], // todas as categorias têm as duas divisões
+  galeria: [
+    ['assets/poster.jpg','Pôster'],['assets/brasao.jpg','Brasão'],['assets/camiseta-rocha.jpg','Camiseta'],
+    ['assets/inscricoes.jpg','Inscrições abertas'],['assets/brasao-dourado.jpg','Brasão dourado'],
+  ],
+};
+
+/* ===================================================================== */
+const $ = (s, el=document) => el.querySelector(s);
+const $$ = (s, el=document) => [...el.querySelectorAll(s)];
+const brl = v => 'R$ ' + v.toLocaleString('pt-BR');
+const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),2600); }
+
+/* banco de dados (Supabase): o site só insere; quem lê e confirma é a organização no painel */
+async function salvar(dados, arquivo){
+  const { url, key } = CONFIG.supabase;
+  if(!url) return { preview: true }; // prévia: não grava nada
+  const id = crypto.randomUUID(), headers = { apikey: key, Authorization: `Bearer ${key}` };
+  let comprovante = null;
+  if(arquivo){
+    const ext = (arquivo.name.split('.').pop() || 'bin').toLowerCase().replace(/[^a-z0-9]/g,'').slice(0,5);
+    comprovante = `${dados.tipo}/${id}.${ext}`;
+    const up = await fetch(`${url}/storage/v1/object/comprovantes/${comprovante}`, { method:'POST', headers:{ ...headers, 'Content-Type': arquivo.type || 'application/octet-stream', 'x-upsert':'false' }, body: arquivo });
+    if(!up.ok) throw new Error('Não conseguimos enviar o comprovante. Tente de novo.');
+  }
+  const r = await fetch(`${url}/rest/v1/eleva_inscricoes`, { method:'POST', headers:{ ...headers, 'Content-Type':'application/json', Prefer:'return=minimal' }, body: JSON.stringify({ id, ...dados, comprovante }) });
+  if(!r.ok) throw new Error('Não conseguimos registrar agora. Confira sua conexão e tente de novo.');
+  return { id };
+}
+const MAX_ARQ = 5 * 1024 * 1024;
+// mensagem de erro do comprovante ('' = ok); no Pix online ele é obrigatório
+const checarArquivo = (arq, pagamento) => arq && arq.size > MAX_ARQ ? 'O arquivo passa de 5 MB' : (!arq && pagamento.startsWith('Pix (') ? 'Anexe o comprovante do Pix' : '');
+function concluir(el, r, titulo, total){
+  const cod = r.id ? r.id.slice(0,8).toUpperCase() : 'PRÉVIA';
+  el.innerHTML = `<div class="done"><h3>${titulo} ✓</h3>
+    <p>Código <code>${cod}</code> · Total <b>${brl(total)}</b></p>
+    <p>${r.preview ? 'Esta é a prévia do site: nada foi salvo.' : 'Guarde o código. A organização confere o pagamento e confirma.'}</p>
+    <p class="help">Ainda não pagou? Pix CNPJ ${CONFIG.pix} ou na recepção da Eleva.</p></div>`;
+  el.scrollIntoView({ behavior:'smooth', block:'center' });
+}
+
+/* menu mobile */
+const menuBtn=$('#menu-toggle'), nav=$('#nav-links');
+menuBtn.addEventListener('click',()=>{const o=nav.classList.toggle('open');menuBtn.setAttribute('aria-expanded',o)});
+$$('a',nav).forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');menuBtn.setAttribute('aria-expanded','false')}));
+
+/* ticker */
+const tickTxt = ['Climb das Antigas','8 anos de Eleva','12 de dezembro','Eleva Open Boulder 2026','A parede é de todo mundo','Inscrições abertas'];
+const tickHtml = tickTxt.map(t=>`<span>${t}</span><i>✦</i>`).join('');
+$('#ticker').innerHTML = tickHtml + tickHtml + tickHtml + tickHtml;
+
+/* contagem regressiva */
+const target = new Date(CONFIG.evento).getTime();
+function tickCountdown(){
+  let diff = Math.max(0, target - Date.now());
+  const d=Math.floor(diff/864e5); diff-=d*864e5;
+  const h=Math.floor(diff/36e5); diff-=h*36e5;
+  const m=Math.floor(diff/6e4); const s=Math.floor((diff-m*6e4)/1e3);
+  const set=(k,v)=>{$(`[data-cd="${k}"]`).textContent=String(v).padStart(2,'0')};
+  set('d',d);set('h',h);set('m',m);set('s',s);
+}
+tickCountdown(); setInterval(tickCountdown,1000);
+
+/* lotes */
+const dayStart = s => new Date(s+'T00:00:00-03:00').getTime();
+const lotEnd = l => new Date(`${l.ate}T${l.ateHora||'23:59:59'}-03:00`).getTime();
+// lote aberto agora; se nenhum estiver aberto, o próximo a abrir (aberto=false); i=-1 = vendas encerradas
+function lotStatus(now=Date.now()){
+  const open = CONFIG.lotes.findIndex(l => now >= dayStart(l.de) && now <= lotEnd(l));
+  if (open >= 0) return { i: open, aberto: true };
+  return { i: CONFIG.lotes.findIndex(l => now < dayStart(l.de)), aberto: false };
+}
+const fmtDate = s => { const [y,m,d]=s.split('-'); return `${d}/${m}`; };
+const fmtEnd = l => fmtDate(l.ate) + (l.ateHora ? ' às ' + parseInt(l.ateHora) + 'h' : '');
+const fmtRange = l => l.de===l.ate ? fmtDate(l.de) + (l.ateHora ? ' até ' + parseInt(l.ateHora) + 'h' : '') : `${fmtDate(l.de)} a ${fmtDate(l.ate)}`;
+const fromPrice = l => l.aluno ?? l.alunoKit;
+const price = v => v==null ? '<small style="font:400 12px var(--body)">só com camiseta</small>' : brl(v);
+let showKit = true;
+function renderLots(){
+  const st = lotStatus(), ci = st.i, now = Date.now();
+  $('#lots').innerHTML = CONFIG.lotes.map((l,i)=>{
+    const state = i===ci ? (st.aberto ? 'current' : 'soon') : (ci===-1 || i<ci) ? 'past' : 'next';
+    const label = {current:'À venda agora', soon:'Abre em '+fmtDate(l.de), past:'Encerrado', next:'Em breve'}[state];
+    let progress='';
+    if(state==='current'){
+      const total=lotEnd(l)-dayStart(l.de), left=lotEnd(l)-now;
+      const pct=Math.min(100,Math.max(4,100-left/total*100));
+      const dias=Math.ceil(left/864e5);
+      progress=`<div class="progress"><div class="bar"><i style="width:${pct}%"></i></div><small>${dias<=1?'Último dia deste lote!':'Vira em '+dias+' dias'}</small></div>`;
+    }
+    return `<article class="lot ${state==='soon'?'current':state}">
+      <span class="status">${label}</span>
+      <h3>${l.nome}</h3><span class="dates">${fmtRange(l)}</span>${l.geral==null?'<span class="promo">Só com camiseta</span>':''}
+      <div class="prices">
+        <div class="row"><span>Geral</span><b>${price(showKit ? l.geralKit : l.geral)}</b></div>
+        <div class="row"><span>Aluno Eleva</span><b>${price(showKit ? l.alunoKit : l.aluno)}</b></div>
+      </div>${progress}</article>`;
+  }).join('');
+  const cur = CONFIG.lotes[ci];
+  if(cur){
+    const quando = st.aberto ? `até ${fmtEnd(cur)}` : `abre em ${fmtDate(cur.de)}`;
+    $('#hero-lot-kicker').textContent = st.aberto ? 'Ingressos à venda' : 'Próximo lote';
+    $('#hero-lot-name').textContent = cur.nome;
+    $('#hero-lot-info').textContent = `a partir de ${brl(fromPrice(cur))} · ${quando}`;
+    $('#live-chip-txt').textContent = st.aberto ? `${cur.nome} à venda` : `${cur.nome} ${quando}`;
+    $('#m-lot').textContent = cur.nome; $('#m-price').textContent = `a partir de ${brl(fromPrice(cur))}`;
+  } else {
+    $('#hero-lot-name').textContent = 'Vendas encerradas';
+    $('#hero-lot-info').textContent = 'Nos vemos na parede!';
+    $('#live-chip-txt').textContent = 'Vendas encerradas';
+  }
+}
+$$('.toggle button').forEach(b=>b.addEventListener('click',()=>{
+  showKit = b.dataset.kit==='1';
+  $$('.toggle button').forEach(x=>x.setAttribute('aria-pressed', String(x===b)));
+  renderLots();
+}));
+renderLots();
+
+/* categorias */
+$('#cat-grid').innerHTML = CONFIG.categorias.map(c=>`
+  <article class="cat reveal">
+    <div class="cat-top"><span>${c.n} / ${c.grupo.toUpperCase()}</span><span class="holds">${c.holds.map(h=>`<i style="background:${h}"></i>`).join('')}</span></div>
+    <div><h3>${c.nome}</h3><p>${c.desc}</p><div class="naipes">${CONFIG.naipes.map(n=>`<span>${n}</span>`).join('')}</div></div>
+  </article>`).join('');
+$('#naipe').innerHTML = '<option value="">Selecione</option>' + CONFIG.naipes.map(n=>`<option>${n}</option>`).join('');
+$('#categoria').innerHTML = '<option value="">Selecione</option>' + CONFIG.categorias.map(c=>`<option>${c.nome}</option>`).join('');
+
+/* galeria + lightbox */
+$('#gallery').innerHTML = CONFIG.galeria.map(([src,cap])=>`<figure data-zoom="${src}"><img src="${src}" alt="${esc(cap)}" loading="lazy"><figcaption>${esc(cap)}</figcaption></figure>`).join('');
+$('#gallery').addEventListener('click',e=>{const f=e.target.closest('[data-zoom]'); if(f) openLightbox(f.dataset.zoom, f.textContent.trim());});
+function openLightbox(src,alt){ $('#lb-img').src=src; $('#lb-img').alt=alt||''; $('#lightbox').classList.add('open'); }
+function closeLightbox(){ $('#lightbox').classList.remove('open'); }
+$('#lightbox').addEventListener('click',e=>{ if(e.target.id!=='lb-img') closeLightbox(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeLightbox(); });
+$('.shirt-img').addEventListener('click',e=>openLightbox(e.currentTarget.dataset.zoom,'Camiseta oficial preta'));
+
+/* pix */
+$$('[data-copy-pix]').forEach(b=>b.addEventListener('click',async()=>{
+  try{ await navigator.clipboard.writeText(CONFIG.pix); toast('Chave Pix copiada ✓'); }catch{ toast('Chave Pix: '+CONFIG.pix); }
+}));
+
+/* inscrição */
+const form=$('#signup');
+function setErr(el,msg){ const f=el.closest('.field'); const e=f&&$('.err',f); el.classList.toggle('invalid',!!msg); if(e) e.textContent=msg||''; return !msg; }
+const maskPhone=v=>{v=v.replace(/\D/g,'').slice(0,11);return v.length>10?v.replace(/(\d{2})(\d{5})(\d{0,4})/,'($1) $2-$3'):v.replace(/(\d{0,2})(\d{0,4})(\d{0,4})/,(m,a,b,c)=>(a?'('+a:'')+(a.length===2?') ':'')+b+(c?'-'+c:''));};
+const maskCpf=v=>v.replace(/\D/g,'').slice(0,11).replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d{1,2})$/,'$1-$2');
+$('#telefone').addEventListener('input',e=>e.target.value=maskPhone(e.target.value));
+$('#cpf').addEventListener('input',e=>e.target.value=maskCpf(e.target.value));
+function cpfValido(c){
+  c=c.replace(/\D/g,''); if(c.length!==11||/^(\d)\1+$/.test(c)) return false;
+  for(let t=9;t<11;t++){ let s=0; for(let i=0;i<t;i++) s+=+c[i]*(t+1-i); if(((s*10)%11)%10!==+c[t]) return false; }
+  return true;
+}
+// modelo com um só tamanho (cropped, infantil) esconde o campo e já preenche o tamanho
+const fillTams=()=>{ const m=CONFIG.modelos.find(x=>x.nome===$('#modelo').value); const ts=m?m.tamanhos:[], unico=ts.length===1;
+  $('#tamanho').innerHTML=(unico?'':'<option value="">Selecione</option>')+ts.map(t=>`<option>${t}</option>`).join('');
+  $('#tamanho-field').hidden=unico; $('#tam-unico').hidden=!unico; $('#tam-unico').textContent=unico?`Tamanho único (${ts[0]})`:'';
+  setErr($('#tamanho'),''); };
+$('#modelo').innerHTML=CONFIG.modelos.map(m=>`<option>${m.nome}</option>`).join('');
+$('#modelo').addEventListener('change',fillTams); fillTams();
+function updateSummary(){
+  const st=lotStatus(), lot=CONFIG.lotes[st.i];
+  const aluno=$('input[name="vinculo"]:checked')?.dataset.aluno==='1';
+  // lote sem valor "sem camiseta" (promocional) obriga a camiseta
+  const semOk=!!lot && lot.geral!=null, semInput=$('input[name="kit"][value="0"]');
+  semInput.disabled=!semOk; if(!semOk && semInput.checked) $('input[name="kit"][value="1"]').checked=true;
+  const kit=$('input[name="kit"]:checked').value==='1';
+  $('#kit-fields').hidden=!kit;
+  if(!lot){ $('#sum-lot').textContent='Vendas encerradas'; $('#sum-total').textContent='—'; return; }
+  $('[data-kit-price]').textContent = `${brl(aluno?lot.alunoKit:lot.geralKit)} · camiseta oficial`;
+  $('[data-sem-price]').textContent = semOk ? `${brl(aluno?lot.aluno:lot.geral)} · só a inscrição` : 'indisponível neste lote';
+  $('#sum-lot').textContent = st.aberto ? `${lot.nome} · até ${fmtEnd(lot)}` : `${lot.nome} · abre em ${fmtDate(lot.de)}`;
+  const total = kit ? (aluno?lot.alunoKit:lot.geralKit) : (aluno?lot.aluno:lot.geral);
+  $('#sum-ticket-label').textContent = `Inscrição ${kit?'com':'sem'} camiseta (${aluno?'aluno Eleva':'geral'})`;
+  $('#sum-ticket').textContent = brl(total);
+  $('#sum-total').textContent = brl(total);
+  return { lot, aluno, kit, total, aberto: st.aberto };
+}
+form.addEventListener('input',updateSummary); form.addEventListener('change',updateSummary); updateSummary();
+
+form.addEventListener('submit',async e=>{
+  e.preventDefault();
+  let ok=true;
+  const req=(id,msg)=>{ const el=$('#'+id); ok = setErr(el, el.value.trim()?'':msg) && ok; };
+  req('nome','Informe seu nome'); req('telefone','Informe seu celular'); req('nascimento','Informe a data de nascimento'); req('categoria','Escolha uma categoria'); req('naipe','Escolha masculino ou feminino'); req('pagamento','Escolha a forma de pagamento');
+  const em=$('#email'); ok = setErr(em, /^\S+@\S+\.\S+$/.test(em.value)?'':'E-mail inválido') && ok;
+  const cpf=$('#cpf'); ok = setErr(cpf, cpfValido(cpf.value)?'':'CPF inválido') && ok;
+  if($('#telefone').value.replace(/\D/g,'').length<10){ setErr($('#telefone'),'Número incompleto'); ok=false; }
+  const kit=$('input[name="kit"]:checked').value==='1';
+  if(kit && !$('#tamanho-field').hidden) ok = setErr($('#tamanho'), $('#tamanho').value?'':'Escolha o tamanho') && ok; else setErr($('#tamanho'),'');
+  const arq=$('#comprovante').files[0]; ok = setErr($('#comprovante'), checarArquivo(arq, $('#pagamento').value)) && ok;
+  if(!$('input[name="vinculo"]:checked')){ ok=false; toast('Diga se você é aluno Eleva'); }
+  const termo=$('#termo-ok'); ok = setErr(termo, termo.checked?'':'Aceite o termo para continuar') && ok;
+  if(!ok){ const first=$('.invalid',form)||$('input[name="vinculo"]',form); first?.scrollIntoView({behavior:'smooth',block:'center'}); first?.focus({preventScroll:true}); return; }
+
+  const s=updateSummary(); if(!s){ toast('As vendas deste ano já foram encerradas.'); return; }
+  const v=id=>$('#'+id).value.trim();
+  const btn=$('button[type="submit"]',form); btn.disabled=true; btn.textContent='Enviando…';
+  try{
+    const r = await salvar({
+      tipo:'inscricao', nome:v('nome'), telefone:v('telefone'), email:v('email'), cpf:v('cpf'), nascimento:v('nascimento'),
+      categoria:v('categoria'), naipe:v('naipe'), vinculo:$('input[name="vinculo"]:checked').value,
+      com_camiseta:kit, modelo:kit?v('modelo'):null, tamanho:kit?v('tamanho'):null,
+      lote:s.lot.nome, valor:s.total, pagamento:v('pagamento'), obs:v('obs')||null, termo_aceito:true,
+    }, arq);
+    concluir(form, r, 'Inscrição recebida', s.total);
+  }catch(err){ toast(err.message); btn.disabled=false; btn.textContent='Enviar inscrição'; }
+});
+
+/* camiseta avulsa */
+const shirt=$('#shirt-form');
+let shirtMod=CONFIG.modelos[0].nome, shirtTam='';
+function renderShirt(){
+  $('#shirt-mods').innerHTML=CONFIG.modelos.map(m=>`<button type="button" class="opt" data-mod="${esc(m.nome)}" aria-pressed="${m.nome===shirtMod}">${m.nome}</button>`).join('');
+  const ts=CONFIG.modelos.find(m=>m.nome===shirtMod).tamanhos;
+  if(ts.length===1) shirtTam=ts[0]; else if(!ts.includes(shirtTam)) shirtTam='';
+  $('#shirt-tams').innerHTML = ts.length===1 ? `<span class="single-size">Tamanho único (${esc(ts[0])})</span>`
+    : ts.map(t=>`<button type="button" class="opt" data-tam="${esc(t)}" aria-pressed="${t===shirtTam}">${esc(t)}</button>`).join('');
+}
+shirt.addEventListener('click',e=>{
+  const m=e.target.closest('[data-mod]'), t=e.target.closest('[data-tam]');
+  if(m){ shirtMod=m.dataset.mod; renderShirt(); }
+  if(t){ shirtTam=t.dataset.tam; $('#shirt-tam-err').textContent=''; renderShirt(); }
+});
+renderShirt();
+$('#s-telefone').addEventListener('input',e=>e.target.value=maskPhone(e.target.value));
+shirt.addEventListener('submit',async e=>{
+  e.preventDefault();
+  const sv=id=>$('#'+id).value.trim(); let ok=true;
+  ok = setErr($('#s-nome'), sv('s-nome').length>=2?'':'Informe seu nome') && ok;
+  ok = setErr($('#s-telefone'), sv('s-telefone').replace(/\D/g,'').length>=10?'':'Informe o celular com DDD') && ok;
+  ok = setErr($('#s-email'), /^\S+@\S+\.\S+$/.test(sv('s-email'))?'':'E-mail inválido') && ok;
+  ok = setErr($('#s-pagamento'), sv('s-pagamento')?'':'Escolha a forma de pagamento') && ok;
+  if(!shirtTam){ $('#shirt-tam-err').textContent='Escolha o tamanho'; ok=false; }
+  const arq=$('#s-comprovante').files[0]; ok = setErr($('#s-comprovante'), checarArquivo(arq, sv('s-pagamento'))) && ok;
+  if(!ok) return;
+  const btn=$('button[type="submit"]',shirt); btn.disabled=true; btn.textContent='Enviando…';
+  try{
+    const r = await salvar({ tipo:'camiseta', nome:sv('s-nome'), telefone:sv('s-telefone'), email:sv('s-email'),
+      com_camiseta:true, modelo:shirtMod, tamanho:shirtTam, valor:CONFIG.camiseta, pagamento:sv('s-pagamento') }, arq);
+    concluir(shirt, r, 'Pedido recebido', CONFIG.camiseta);
+  }catch(err){ toast(err.message); btn.disabled=false; btn.textContent='Pedir camiseta'; }
+});
+
+/* animações ao rolar */
+const io=new IntersectionObserver(es=>es.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target);} }),{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+$$('.reveal').forEach(el=>io.observe(el));
+
+/* CTA fixo no celular: aparece depois do hero e some na seção de inscrição */
+const mcta=$('#mobile-cta'); let pastHero=false, inSignup=false;
+const upd=()=>mcta.classList.toggle('show',pastHero&&!inSignup);
+new IntersectionObserver(([e])=>{pastHero=!e.isIntersecting;upd();}).observe($('#inicio'));
+new IntersectionObserver(([e])=>{inSignup=e.isIntersecting;upd();}).observe($('#inscricao'));
+</script>
+</body>
+</html>
