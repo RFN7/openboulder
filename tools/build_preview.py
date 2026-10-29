@@ -10,7 +10,7 @@ html = src.read_text(encoding='utf-8')
 INK, CREAM, GOLD, RUST, BLUE, OLIVE = '#0f0f0f', '#ffebb4', '#c08d42', '#812300', '#628cff', '#666026'
 SIZES = {
     'adesivos': (876, 1190, 'Cartela de adesivos'), 'brasao-dourado': (1070, 1390, 'Brasão do evento'),
-    'brasao': (1070, 1340, 'Brasão do evento'), 'camiseta-rocha': (1800, 1005, 'Foto da camiseta'),
+    'brasao': (1070, 1340, 'Brasão do evento'), 'camiseta-rocha': (1800, 1005, 'Foto da camiseta'), 'camiseta-frente': (1272, 1408, 'Foto da camiseta'),
     'ecobag': (1800, 1005, 'Foto da ecobag'), 'inscricoes': (1100, 1240, 'Arte de inscrições'),
     'poster': (1400, 1128, 'Pôster oficial'), 'regatas': (1800, 1005, 'Foto das regatas'),
 }

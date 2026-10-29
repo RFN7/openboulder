@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Painel Open Boulder</title>
+  <link rel="icon" href="assets/brasao.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Courier+Prime:wght@400;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ink:#0f0f0f;--cream:#ffebb4;--paper:#fbf3dc;--paper2:#f3e4bb;--gold:#c08d42;--rust:#812300;--green:#2f8a4a;--red:#b3261e;
+      --text:#1d1a14;--muted:#6b5f45;--line:rgba(15,15,15,.14);
+      --display:'Alfa Slab One',Georgia,serif;--mono:'Courier Prime',ui-monospace,monospace;--body:'DM Sans',system-ui,sans-serif;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--paper);color:var(--text);font:15px/1.5 var(--body)}
+    button,input,select{font:inherit;color:inherit}
+    .wrap{width:min(1280px,calc(100% - 32px));margin:auto}
+    header{background:var(--ink);color:var(--cream);padding:14px 0}
+    header .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    header h1{font:400 20px var(--display);margin:0;display:flex;align-items:center;gap:10px}
+    header img{width:34px;height:34px;border-radius:50%;object-fit:cover;border:1.5px solid var(--gold)}
+    header small{font:700 11px var(--mono);color:var(--gold);letter-spacing:.08em}
+    .btn{border:2px solid var(--ink);border-radius:999px;background:var(--rust);color:var(--cream);padding:9px 16px;font:700 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
+    .btn.gold{background:var(--gold);color:var(--ink)}
+    .btn.ghost{background:transparent;color:var(--cream);border-color:var(--cream)}
+    .btn.light{background:var(--cream);color:var(--ink)}
+    .btn:disabled{opacity:.5;cursor:wait}
+    .card{background:var(--cream);border:2px solid var(--ink);border-radius:14px;padding:20px}
+    .login{max-width:380px;margin:60px auto;display:grid;gap:14px}
+    .login h2{font:400 26px var(--display);margin:0}
+    label{display:grid;gap:5px;font:700 11px var(--mono);letter-spacing:.08em;text-transform:uppercase}
+    input,select{border:1.5px solid rgba(15,15,15,.25);background:#fffaf0;border-radius:9px;padding:9px 11px;text-transform:none;letter-spacing:0;font-weight:400}
+    .msg{font-size:13px;color:var(--red);min-height:1em}
+    .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:20px 0}
+    .kpi{background:var(--cream);border:2px solid var(--ink);border-radius:12px;padding:12px 14px}
+    .kpi small{font:700 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+    .kpi b{display:block;font:400 26px var(--display);font-variant-numeric:tabular-nums}
+    .tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:2px solid var(--ink);margin-bottom:16px}
+    .tabs button{border:2px solid var(--ink);border-bottom:0;border-radius:10px 10px 0 0;background:var(--paper2);padding:9px 16px;font:700 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;cursor:pointer;margin-bottom:-2px}
+    .tabs button[aria-selected="true"]{background:var(--ink);color:var(--cream)}
+    .filters{display:flex;gap:10px;flex-wrap:wrap;align-items:end;margin-bottom:12px}
+    .filters label{min-width:140px}
+    .count{font:700 12px var(--mono);color:var(--muted);margin:0 0 8px}
+    .table{overflow-x:auto;border:2px solid var(--ink);border-radius:12px;background:#fffaf0}
+    table{border-collapse:collapse;width:100%;font-size:14px}
+    th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap;vertical-align:middle}
+    th{background:var(--ink);color:var(--cream);font:700 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;position:sticky;top:0}
+    td.nome{font-weight:700;white-space:normal;min-width:180px}
+    td.num{text-align:right;font-variant-numeric:tabular-nums}
+    tr.cancelado td{opacity:.45}
+    .pill{display:inline-block;border-radius:999px;padding:2px 9px;font:700 10px var(--mono);letter-spacing:.06em;text-transform:uppercase}
+    .pill.pendente{background:#fde7b0;color:#7a4b00}.pill.confirmado{background:#d5f0dc;color:var(--green)}.pill.cancelado{background:#f5d3d0;color:var(--red)}
+    td select{padding:5px 8px;font-size:13px}
+    .low{color:var(--red);font-weight:700}
+    .contato{display:block;min-width:200px;font-size:12px;color:var(--muted);white-space:normal}
+    .link{background:none;border:0;color:var(--rust);text-decoration:underline;cursor:pointer;padding:0;font-size:13px}
+    .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+    .report h3{font:400 20px var(--display);margin:0 0 8px}
+    .report p{margin:0 0 12px;color:var(--muted);font-size:14px}
+    .toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,120px);background:var(--ink);color:var(--cream);border:2px solid var(--gold);border-radius:999px;padding:10px 18px;font:700 13px var(--mono);transition:transform .25s;z-index:9;max-width:calc(100% - 32px);text-align:center}
+    .toast.show{transform:translate(-50%,0)}
+    [hidden]{display:none!important}
+    main{padding-bottom:60px}
+  </style>
+</head>
+<body>
+<header><div class="wrap">
+  <h1><img src="assets/brasao.jpg" alt="">Painel Open Boulder <small>2026</small></h1>
+  <div id="user-box" hidden style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+    <span id="user-email" style="font:700 12px var(--mono)"></span>
+    <button class="btn ghost" id="btn-senha" type="button">Trocar senha</button>
+    <button class="btn ghost" id="btn-sair" type="button">Sair</button>
+  </div>
+</div></header>
+
+<main class="wrap">
+  <form class="card login" id="login" hidden>
+    <h2>Entrar</h2>
+    <label>E-mail<input id="l-email" type="email" autocomplete="username" required></label>
+    <label>Senha<input id="l-senha" type="password" autocomplete="current-password" required></label>
+    <button class="btn" type="submit">Entrar</button>
+    <p class="msg" id="l-msg"></p>
+  </form>
+
+  <section id="app" hidden>
+    <div class="kpis" id="kpis"></div>
+    <div class="tabs" role="tablist">
+      <button type="button" role="tab" data-tab="inscricoes" aria-selected="true">Inscrições</button>
+      <button type="button" role="tab" data-tab="camisetas" aria-selected="false">Camisetas avulsas</button>
+      <button type="button" role="tab" data-tab="estoque" aria-selected="false">Estoque</button>
+      <button type="button" role="tab" data-tab="relatorios" aria-selected="false">Relatórios</button>
+    </div>
+
+    <div data-panel="inscricoes">
+      <div class="filters">
+        <label>Buscar nome<input id="f-busca" placeholder="Digite um nome"></label>
+        <label>Categoria<select id="f-categoria"><option value="">Todas</option></select></label>
+        <label>Naipe<select id="f-naipe"><option value="">Todos</option><option>Masculino</option><option>Feminino</option></select></label>
+        <label>Status<select id="f-status"><option value="">Todos</option><option>pendente</option><option>confirmado</option><option>cancelado</option></select></label>
+        <label>Lote<select id="f-lote"><option value="">Todos</option></select></label>
+        <label>Ordenar<select id="f-ordem"><option value="recentes">Mais recentes</option><option value="nome">Nome</option><option value="categoria">Categoria e nome</option></select></label>
+        <button class="btn light" type="button" data-recarregar>Atualizar</button>
+      </div>
+      <p class="count" id="c-inscricoes"></p>
+      <div class="table"><table><thead><tr>
+        <th>Nome</th><th>Categoria</th><th>Naipe</th><th>Vínculo</th><th>Camiseta</th><th>Lote</th><th>Valor</th><th>Pagamento</th><th>Comprovante</th><th>Status</th><th>Data</th><th>Contato</th>
+      </tr></thead><tbody id="t-inscricoes"></tbody></table></div>
+    </div>
+
+    <div data-panel="camisetas" hidden>
+      <div class="filters">
+        <label>Buscar nome<input id="f2-busca" placeholder="Digite um nome"></label>
+        <label>Modelo<select id="f2-modelo"><option value="">Todos</option></select></label>
+        <label>Status<select id="f2-status"><option value="">Todos</option><option>pendente</option><option>confirmado</option><option>cancelado</option></select></label>
+        <button class="btn light" type="button" data-recarregar>Atualizar</button>
+      </div>
+      <p class="count" id="c-camisetas"></p>
+      <div class="table"><table><thead><tr>
+        <th>Nome</th><th>Modelo</th><th>Tamanho</th><th>Valor</th><th>Pagamento</th><th>Comprovante</th><th>Status</th><th>Data</th><th>Contato</th>
+      </tr></thead><tbody id="t-camisetas"></tbody></table></div>
+    </div>
+
+    <div data-panel="estoque" hidden>
+      <p class="count">Vendidas = inscrições com camiseta + camisetas avulsas que não estão canceladas. Cancelar um pedido devolve a camiseta ao estoque.</p>
+      <div class="table"><table><thead><tr>
+        <th>Modelo</th><th>Tamanho</th><th>Estoque total</th><th>Vendidas</th><th>Disponíveis</th><th></th>
+      </tr></thead><tbody id="t-estoque"></tbody></table></div>
+    </div>
+
+    <div data-panel="relatorios" hidden>
+      <div class="grid2" id="relatorios"></div>
+    </div>
+  </section>
+</main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+const SUPABASE = { url: 'https://tkewhxjfmjcorhsfiuen.supabase.co', key: 'sb_publishable_DgD_d-lKhm4qydg0RoMJXQ_sdO0tGn9' };
+// mesmos lotes do site (index.html → CONFIG.lotes)
+const LOTES = [
+  { nome:'Lote promocional', de:'2026-10-29', ate:'2026-10-29' },
+  { nome:'1º lote', de:'2026-10-31', ate:'2026-11-09' },
+  { nome:'2º lote', de:'2026-11-10', ate:'2026-11-24' },
+  { nome:'3º lote', de:'2026-11-25', ate:'2026-12-11' },
+  { nome:'Lote final', de:'2026-12-12', ate:'2026-12-12' },
+];
+const CATEGORIAS = ['Curumim','Funfarra','Iniciante','Intermediário','Master','Sênior','Paraclimb'];
+
+const db = supabase.createClient(SUPABASE.url, SUPABASE.key);
+const $ = (s, el=document) => el.querySelector(s);
+const $$ = (s, el=document) => [...el.querySelectorAll(s)];
+const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const brl = v => 'R$ ' + Number(v||0).toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+const dataBR = s => new Date(s).toLocaleString('pt-BR', { timeZone:'America/Sao_Paulo', day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' });
+const diaBR = s => new Date(s).toLocaleDateString('sv-SE', { timeZone:'America/Sao_Paulo' }); // AAAA-MM-DD
+function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),3000); }
+
+let linhas = [], estoque = [];
+
+/* ---------- login ---------- */
+async function iniciar(){
+  const { data:{ session } } = await db.auth.getSession();
+  if(!session){ $('#login').hidden=false; $('#app').hidden=true; $('#user-box').hidden=true; return; }
+  const { data: ok } = await db.rpc('eleva_is_organizador');
+  if(!ok){ await db.auth.signOut(); $('#login').hidden=false; $('#l-msg').textContent='Este e-mail não tem acesso ao painel. Fale com a organização.'; return; }
+  $('#login').hidden=true; $('#app').hidden=false; $('#user-box').hidden=false; $('#user-email').textContent=session.user.email;
+  await carregar();
+}
+$('#login').addEventListener('submit', async e=>{
+  e.preventDefault(); $('#l-msg').textContent='';
+  const btn=$('button',e.target); btn.disabled=true;
+  const { error } = await db.auth.signInWithPassword({ email:$('#l-email').value.trim(), password:$('#l-senha').value });
+  btn.disabled=false;
+  if(error){ $('#l-msg').textContent='E-mail ou senha incorretos.'; return; }
+  iniciar();
+});
+$('#btn-sair').addEventListener('click', async()=>{ await db.auth.signOut(); location.reload(); });
+$('#btn-senha').addEventListener('click', async()=>{
+  const nova = window.prompt('Nova senha (mínimo 8 caracteres):');
+  if(!nova) return;
+  if(nova.length<8){ toast('A senha precisa ter pelo menos 8 caracteres.'); return; }
+  const { error } = await db.auth.updateUser({ password:nova });
+  toast(error ? 'Não foi possível trocar a senha.' : 'Senha trocada ✓');
+});
+
+/* ---------- dados ---------- */
+async function carregar(){
+  const [a, b] = await Promise.all([
+    db.from('eleva_inscricoes').select('*').order('created_at', { ascending:false }),
+    db.from('eleva_estoque_status').select('*').order('ordem'),
+  ]);
+  if(a.error || b.error){ toast('Erro ao carregar. Tente de novo.'); return; }
+  linhas = a.data; estoque = b.data;
+  preencherFiltros(); renderTudo();
+}
+$$('[data-recarregar]').forEach(b=>b.addEventListener('click', ()=>carregar().then(()=>toast('Atualizado ✓'))));
+
+function preencherFiltros(){
+  const fill = (sel, vals) => { const el=$(sel), atual=el.value; el.innerHTML = el.options[0].outerHTML + vals.map(v=>`<option>${esc(v)}</option>`).join(''); el.value=atual; };
+  fill('#f-categoria', CATEGORIAS);
+  fill('#f-lote', LOTES.map(l=>l.nome));
+  fill('#f2-modelo', [...new Set(estoque.map(e=>e.modelo))]);
+}
+
+function renderTudo(){ renderKpis(); renderInscricoes(); renderCamisetas(); renderEstoque(); renderRelatorios(); }
+
+function renderKpis(){
+  const ativos = linhas.filter(l=>l.status!=='cancelado');
+  const ins = ativos.filter(l=>l.tipo==='inscricao');
+  const conf = ativos.filter(l=>l.status==='confirmado');
+  const vendidas = estoque.reduce((s,e)=>s+e.vendidas,0), total = estoque.reduce((s,e)=>s+e.quantidade,0);
+  const k = [
+    ['Inscritos', ins.length],
+    ['Pendentes', ativos.filter(l=>l.status==='pendente').length],
+    ['Confirmados', conf.length],
+    ['Recebido (confirmado)', brl(conf.reduce((s,l)=>s+Number(l.valor),0))],
+    ['A receber (pendente)', brl(ativos.filter(l=>l.status==='pendente').reduce((s,l)=>s+Number(l.valor),0))],
+    ['Camisetas disponíveis', `${total-vendidas} de ${total}`],
+  ];
+  $('#kpis').innerHTML = k.map(([t,v])=>`<div class="kpi"><small>${t}</small><b>${v}</b></div>`).join('');
+}
+
+const statusSelect = l => `<select data-status="${l.id}" aria-label="Status de ${esc(l.nome)}">${['pendente','confirmado','cancelado'].map(s=>`<option ${s===l.status?'selected':''}>${s}</option>`).join('')}</select>`;
+const comprovanteBtn = l => l.comprovante ? `<button class="link" type="button" data-comp="${esc(l.comprovante)}">ver</button>` : '<span class="contato">—</span>';
+const contato = l => `<span class="contato">${esc(l.telefone)}<br>${esc(l.email)}${l.cpf?'<br>CPF '+esc(l.cpf):''}${l.obs?'<br>Obs.: '+esc(l.obs):''}</span>`;
+
+function renderInscricoes(){
+  const busca=$('#f-busca').value.trim().toLowerCase(), cat=$('#f-categoria').value, naipe=$('#f-naipe').value, st=$('#f-status').value, lote=$('#f-lote').value, ordem=$('#f-ordem').value;
+  let r = linhas.filter(l=>l.tipo==='inscricao' && (!busca||l.nome.toLowerCase().includes(busca)) && (!cat||l.categoria===cat) && (!naipe||l.naipe===naipe) && (!st||l.status===st) && (!lote||l.lote===lote));
+  if(ordem==='nome') r.sort((a,b)=>a.nome.localeCompare(b.nome,'pt-BR'));
+  if(ordem==='categoria') r.sort((a,b)=>CATEGORIAS.indexOf(a.categoria)-CATEGORIAS.indexOf(b.categoria) || a.naipe.localeCompare(b.naipe) || a.nome.localeCompare(b.nome,'pt-BR'));
+  $('#c-inscricoes').textContent = `${r.length} inscrição(ões) · ${r.filter(l=>l.status!=='cancelado').length} ativas`;
+  $('#t-inscricoes').innerHTML = r.map(l=>`<tr class="${l.status}">
+    <td class="nome">${esc(l.nome)}</td><td>${esc(l.categoria)}</td><td>${esc(l.naipe)}</td><td>${esc(l.vinculo)}</td>
+    <td>${l.com_camiseta?esc(l.modelo)+' · '+esc(l.tamanho):'—'}</td><td>${esc(l.lote)}</td><td class="num">${brl(l.valor)}</td>
+    <td>${esc(l.pagamento)}</td><td>${comprovanteBtn(l)}</td><td>${statusSelect(l)}</td><td>${dataBR(l.created_at)}</td><td>${contato(l)}</td></tr>`).join('')
+    || '<tr><td colspan="12">Nenhuma inscrição com esses filtros.</td></tr>';
+}
+['#f-busca','#f-categoria','#f-naipe','#f-status','#f-lote','#f-ordem'].forEach(s=>$(s).addEventListener('input',renderInscricoes));
+
+function renderCamisetas(){
+  const busca=$('#f2-busca').value.trim().toLowerCase(), mod=$('#f2-modelo').value, st=$('#f2-status').value;
+  const r = linhas.filter(l=>l.tipo==='camiseta' && (!busca||l.nome.toLowerCase().includes(busca)) && (!mod||l.modelo===mod) && (!st||l.status===st));
+  $('#c-camisetas').textContent = `${r.length} pedido(s)`;
+  $('#t-camisetas').innerHTML = r.map(l=>`<tr class="${l.status}">
+    <td class="nome">${esc(l.nome)}</td><td>${esc(l.modelo)}</td><td>${esc(l.tamanho)}</td><td class="num">${brl(l.valor)}</td>
+    <td>${esc(l.pagamento)}</td><td>${comprovanteBtn(l)}</td><td>${statusSelect(l)}</td><td>${dataBR(l.created_at)}</td><td>${contato(l)}</td></tr>`).join('')
+    || '<tr><td colspan="9">Nenhum pedido com esses filtros.</td></tr>';
+}
+['#f2-busca','#f2-modelo','#f2-status'].forEach(s=>$(s).addEventListener('input',renderCamisetas));
+
+function renderEstoque(){
+  $('#t-estoque').innerHTML = estoque.map(e=>`<tr>
+    <td class="nome">${esc(e.modelo)}</td><td>${esc(e.tamanho)}</td>
+    <td><input type="number" min="${e.vendidas}" value="${e.quantidade}" style="width:80px" data-qtd="${esc(e.modelo)}|${esc(e.tamanho)}" aria-label="Estoque de ${esc(e.modelo)} ${esc(e.tamanho)}"></td>
+    <td class="num">${e.vendidas}</td><td class="num ${e.disponivel<=2?'low':''}">${e.disponivel}</td>
+    <td><button class="btn light" type="button" data-salvar="${esc(e.modelo)}|${esc(e.tamanho)}">Salvar</button></td></tr>`).join('');
+}
+
+/* ---------- ações ---------- */
+document.addEventListener('change', async e=>{
+  const s = e.target.closest('[data-status]'); if(!s) return;
+  const l = linhas.find(x=>x.id===s.dataset.status), antes = l.status;
+  s.disabled = true;
+  const { error } = await db.from('eleva_inscricoes').update({ status:s.value }).eq('id', l.id);
+  s.disabled = false;
+  if(error){ s.value = antes; toast(error.message.startsWith('ESGOTADO') ? 'Não dá para reativar: esse tamanho esgotou.' : 'Não foi possível salvar.'); return; }
+  toast(`${l.nome}: ${s.value} ✓`); await carregar();
+});
+document.addEventListener('click', async e=>{
+  const c = e.target.closest('[data-comp]');
+  if(c){
+    const { data, error } = await db.storage.from('comprovantes').createSignedUrl(c.dataset.comp, 300);
+    if(error){ toast('Não foi possível abrir o comprovante.'); return; }
+    window.open(data.signedUrl, '_blank', 'noopener');
+  }
+  const sv = e.target.closest('[data-salvar]');
+  if(sv){
+    const [modelo, tamanho] = sv.dataset.salvar.split('|');
+    const inp = $(`[data-qtd="${CSS.escape(sv.dataset.salvar)}"]`), q = parseInt(inp.value,10), item = estoque.find(x=>x.modelo===modelo&&x.tamanho===tamanho);
+    if(!(q>=item.vendidas)){ toast(`O estoque não pode ser menor que as ${item.vendidas} já vendidas.`); return; }
+    const { error } = await db.from('eleva_estoque').update({ quantidade:q }).eq('modelo',modelo).eq('tamanho',tamanho);
+    toast(error ? 'Não foi possível salvar.' : `${modelo} ${tamanho}: ${q} ✓`); await carregar();
+  }
+  const rel = e.target.closest('[data-relatorio]');
+  if(rel) baixarRelatorio(rel.dataset.relatorio);
+});
+$$('[role="tab"]').forEach(t=>t.addEventListener('click',()=>{
+  $$('[role="tab"]').forEach(x=>x.setAttribute('aria-selected', String(x===t)));
+  $$('[data-panel]').forEach(p=>p.hidden = p.dataset.panel!==t.dataset.tab);
+}));
+
+/* ---------- relatórios ---------- */
+const hoje = () => diaBR(new Date());
+// pedido avulso entra no lote em que foi feito (pela data)
+const loteDaData = d => (LOTES.find(l=>d>=l.de && d<=l.ate) || {}).nome || 'Fora de lote';
+function renderRelatorios(){
+  const blocos = [...LOTES.map(l=>({ id:l.nome, titulo:l.nome, sub: l.de===l.ate ? l.de.split('-').reverse().slice(0,2).join('/') : `${l.de.split('-').reverse().slice(0,2).join('/')} a ${l.ate.split('-').reverse().slice(0,2).join('/')}`, fim:l.ate })),
+                  { id:'__todos', titulo:'Geral', sub:'Tudo até agora' }];
+  $('#relatorios').innerHTML = blocos.map(b=>{
+    const doLote = filtroRelatorio(b.id), ativos = doLote.filter(l=>l.status!=='cancelado');
+    const fechado = b.fim && hoje() > b.fim;
+    return `<div class="card report"><h3>${esc(b.titulo)}</h3><p>${esc(b.sub)} · ${b.fim ? (fechado?'lote encerrado':'em andamento ou futuro') : ''}<br>${ativos.filter(l=>l.tipo==='inscricao').length} inscrições · ${ativos.filter(l=>l.com_camiseta).length} camisetas · ${brl(ativos.reduce((s,l)=>s+Number(l.valor),0))}</p>
+      <button class="btn gold" type="button" data-relatorio="${esc(b.id)}">Baixar planilha</button></div>`;
+  }).join('');
+}
+function filtroRelatorio(id){
+  if(id==='__todos') return linhas;
+  return linhas.filter(l => l.tipo==='inscricao' ? l.lote===id : loteDaData(diaBR(l.created_at))===id);
+}
+function baixarRelatorio(id){
+  const rows = filtroRelatorio(id), ativos = rows.filter(l=>l.status!=='cancelado');
+  const nome = id==='__todos' ? 'Geral' : id;
+  const resumo = [
+    ['Eleva Open Boulder 2026 — Relatório', nome], ['Gerado em', new Date().toLocaleString('pt-BR',{timeZone:'America/Sao_Paulo'})], [],
+    ['Inscrições ativas', ativos.filter(l=>l.tipo==='inscricao').length],
+    ['Camisetas avulsas ativas', ativos.filter(l=>l.tipo==='camiseta').length],
+    ['Confirmados', ativos.filter(l=>l.status==='confirmado').length], ['Pendentes', ativos.filter(l=>l.status==='pendente').length],
+    ['Cancelados', rows.filter(l=>l.status==='cancelado').length],
+    ['Valor confirmado (R$)', ativos.filter(l=>l.status==='confirmado').reduce((s,l)=>s+Number(l.valor),0)],
+    ['Valor pendente (R$)', ativos.filter(l=>l.status==='pendente').reduce((s,l)=>s+Number(l.valor),0)], [],
+    ['Inscritos por categoria', 'Masculino', 'Feminino', 'Total'],
+    ...CATEGORIAS.map(c=>{ const m=ativos.filter(l=>l.categoria===c&&l.naipe==='Masculino').length, f=ativos.filter(l=>l.categoria===c&&l.naipe==='Feminino').length; return [c,m,f,m+f]; }), [],
+    ['Camisetas (inscrição + avulsa)', 'Tamanho', 'Quantidade'],
+    ...estoque.map(e=>[e.modelo, e.tamanho, ativos.filter(l=>l.com_camiseta&&l.modelo===e.modelo&&l.tamanho===e.tamanho).length]).filter(r=>r[2]>0), [],
+    ['Estoque agora', 'Tamanho', 'Total', 'Vendidas', 'Disponíveis'], ...estoque.map(e=>[e.modelo,e.tamanho,e.quantidade,e.vendidas,e.disponivel]),
+  ];
+  const insc = rows.filter(l=>l.tipo==='inscricao').map(l=>({ Nome:l.nome, Categoria:l.categoria, Naipe:l.naipe, 'Vínculo':l.vinculo, Camiseta:l.com_camiseta?`${l.modelo} ${l.tamanho}`:'Não', Lote:l.lote, Valor:Number(l.valor), Pagamento:l.pagamento, Comprovante:l.comprovante?'Sim':'Não', Status:l.status, Data:dataBR(l.created_at), Celular:l.telefone, 'E-mail':l.email, CPF:l.cpf, Nascimento:l.nascimento, 'Observações':l.obs||'' }));
+  const cams = rows.filter(l=>l.tipo==='camiseta').map(l=>({ Nome:l.nome, Modelo:l.modelo, Tamanho:l.tamanho, Valor:Number(l.valor), Pagamento:l.pagamento, Comprovante:l.comprovante?'Sim':'Não', Status:l.status, Data:dataBR(l.created_at), Celular:l.telefone, 'E-mail':l.email }));
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(resumo), 'Resumo');
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(insc.length?insc:[{Nome:'Nenhuma inscrição'}]), 'Inscrições');
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(cams.length?cams:[{Nome:'Nenhum pedido'}]), 'Camisetas avulsas');
+  XLSX.writeFile(wb, `open-boulder-2026-${nome.toLowerCase().normalize('NFD').replace(/[^a-z0-9]+/g,'-')}.xlsx`);
+}
+
+iniciar();
+</script>
+</body>
+</html>

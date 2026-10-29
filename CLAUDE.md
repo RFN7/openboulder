@@ -95,6 +95,15 @@ Cada inscrição e cada pedido de camiseta avulsa é gravado no Supabase (ver ab
 - Existe um arquivo de teste de 14 bytes em `comprovantes/camiseta/00000000-...0001.pdf`; pode apagar pelo painel.
 - Código: https://github.com/RFN7/eleva-open-boulder (público). Site real: https://rfn7.github.io/eleva-open-boulder/ (GitHub Pages, atualiza a cada push na `main`).
 
+## Estoque de camisetas e painel (29/10/2026)
+- Tabela `eleva_estoque` (modelo × tamanho), valores da planilha do cliente: total 91. Croppeds têm P/M/G/GG; infantil é "8 a 10 anos".
+- Disponível = estoque − pedidos com camiseta não cancelados (view `eleva_estoque_status`; o site lê pela função `eleva_estoque_disponivel`).
+- Trigger `eleva_baixa_estoque` trava o item e recusa a venda quando esgota ("ESGOTADO: ..."). Cancelar devolve ao estoque; reativar um cancelado só se houver estoque.
+- Painel da organização: `admin.html` (https://rfn7.github.io/eleva-open-boulder/admin.html). Login por e-mail e senha do Supabase Auth; só entra quem está em `eleva_organizadores`.
+- Criar acesso: inserir usuário em `auth.users` + `auth.identities` com senha temporária (crypt/bf) e o e-mail em `eleva_organizadores`. A pessoa troca a senha no botão "Trocar senha".
+- Relatório: aba Relatórios do painel baixa .xlsx por lote (Resumo, Inscrições, Camisetas avulsas). Envio automático por e-mail **pendente**: falta o e-mail de destino e um serviço de envio.
+- Dandara (28/10): Guará → SOF Sul, Infantil → Curumim (só categoria), Deli Deli na programação, lotes só por data, patrocinadores fora até ter todos.
+
 ## Pendências
 - Aguardando aprovação do cliente na prévia.
 - Patrocinadores: 3 espaços ainda com "Sua marca aqui".

@@ -186,12 +186,14 @@
     /* camiseta */
     .shirt{display:grid;grid-template-columns:1.1fr .9fr;gap:26px;align-items:stretch}
     .shirt-img{border:2px solid var(--cream);border-radius:18px;overflow:hidden;cursor:zoom-in;background:var(--ink)}
-    .shirt-img img{width:100%;height:100%;min-height:320px;object-fit:cover;object-position:45% center}
+    .shirt-img img{width:100%;height:100%;min-height:320px;object-fit:cover;object-position:center 40%}
     .shirt-card{background:var(--cream);color:var(--ink);border:2px solid var(--ink);border-radius:18px;padding:24px;display:grid;gap:16px}
     .shirt-card h3{font:400 26px/1.1 var(--display);margin:0}
     .shirt-card p{margin:0;font-size:14px;color:var(--muted)}
     .shirt-card .tag{position:static;justify-self:start}
     .shirt-card .price{font:400 30px var(--display);color:var(--rust)}
+    .opt:disabled{opacity:.4;text-decoration:line-through;cursor:not-allowed}
+    .opt small{font-weight:400;opacity:.7;margin-left:4px}
     .single-size{font:700 12px var(--mono);letter-spacing:.06em;color:var(--muted)}
     .help{font-size:12px;color:var(--muted)}
     .done{text-align:center;display:grid;gap:10px;padding:10px 0}
@@ -512,14 +514,14 @@
         <p>Arte exclusiva do Estúdio Avoada para os 8 anos de Eleva. Só na cor preta, em edição limitada.</p>
       </div>
       <div class="shirt reveal">
-        <div class="shirt-img" data-zoom="assets/camiseta-rocha.jpg"><img src="assets/camiseta-rocha.jpg" alt="Camiseta oficial preta com o brasão Climb das Antigas nas costas" loading="lazy" width="1600" height="893"></div>
+        <div class="shirt-img" data-zoom="assets/camiseta-frente.jpg"><img src="assets/camiseta-frente.jpg" alt="Estampa da camiseta oficial: brasão Open Boulder Eleva 2026 na frente" loading="lazy" width="1272" height="1408"></div>
         <form class="shirt-card" id="shirt-form" novalidate>
           <span class="tag hot">Mesmo valor em qualquer lote</span>
           <h3>Camiseta preta Climb das Antigas</h3>
           <span class="price">R$ 90</span>
           <p>Quer só a camiseta, sem se inscrever? Escolha o modelo e faça o pedido aqui. Quem se inscreve com camiseta já recebe a sua inclusa.</p>
           <div><span class="opt-label">Modelo</span><div class="opts" id="shirt-mods"></div></div>
-          <div><span class="opt-label">Tamanho</span><div class="opts" id="shirt-tams"></div><span class="err" id="shirt-tam-err"></span></div>
+          <div><span class="opt-label">Tamanho <span style="text-transform:none;letter-spacing:0;font-weight:400">(o número mostra quantas restam)</span></span><div class="opts" id="shirt-tams"></div><span class="err" id="shirt-tam-err"></span></div>
           <div class="fgrid">
             <div class="field full"><label for="s-nome">Nome completo</label><input id="s-nome" autocomplete="name" required><span class="err"></span></div>
             <div class="field"><label for="s-telefone">Celular</label><input id="s-telefone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(61) 90000-0000" required><span class="err"></span></div>
@@ -718,9 +720,9 @@ const CONFIG = {
   modelos: [
     { nome: 'Camiseta com manga', tamanhos: ['P','M','G','GG'] },
     { nome: 'Camiseta regata',    tamanhos: ['P','M','G','GG'] },
-    { nome: 'Cropped com manga',  tamanhos: ['U'] },
-    { nome: 'Cropped regata',     tamanhos: ['U'] },
-    { nome: 'Infantil regata',    tamanhos: ['8 a 12 anos'] },
+    { nome: 'Cropped com manga',  tamanhos: ['P','M','G','GG'] },
+    { nome: 'Cropped regata',     tamanhos: ['P','M','G','GG'] },
+    { nome: 'Infantil regata',    tamanhos: ['8 a 10 anos'] },
   ],
   categorias: [
     { n:'01', grupo:'Festival', nome:'Curumim', desc:'Para as nossas pequenas grandes máquinas.', holds:[] },
@@ -754,8 +756,28 @@ async function salvar(dados, arquivo){
     if(!up.ok) throw new Error('Não conseguimos enviar o comprovante. Tente de novo.');
   }
   const r = await fetch(`${url}/rest/v1/eleva_inscricoes`, { method:'POST', headers:{ ...headers, 'Content-Type':'application/json', Prefer:'return=minimal' }, body: JSON.stringify({ id, ...dados, comprovante }) });
-  if(!r.ok) throw new Error('Não conseguimos registrar agora. Confira sua conexão e tente de novo.');
+  if(!r.ok){
+    const msg = (await r.json().catch(()=>({}))).message || '';
+    if(msg.startsWith('ESGOTADO')){ carregarEstoque(); throw new Error('Esse tamanho acabou de esgotar. Escolha outro.'); }
+    throw new Error('Não conseguimos registrar agora. Confira sua conexão e tente de novo.');
+  }
+  carregarEstoque();
   return { id };
+}
+
+/* estoque de camisetas: quanto resta de cada modelo/tamanho (null = ainda não carregou) */
+let estoque = null;
+const resta = (modelo, tam) => estoque ? (estoque[modelo+'|'+tam] ?? 0) : null;
+const restaModelo = m => estoque ? m.tamanhos.reduce((s,t)=>s+resta(m.nome,t),0) : null;
+async function carregarEstoque(){
+  const { url, key } = CONFIG.supabase;
+  if(!url) return;
+  try{
+    const r = await fetch(`${url}/rest/v1/rpc/eleva_estoque_disponivel`, { method:'POST', headers:{ apikey:key, Authorization:`Bearer ${key}`, 'Content-Type':'application/json' }, body:'{}' });
+    if(!r.ok) return;
+    estoque = Object.fromEntries((await r.json()).map(x=>[x.modelo+'|'+x.tamanho, Math.max(0,x.disponivel)]));
+    document.dispatchEvent(new Event('estoque'));
+  }catch{}
 }
 const MAX_ARQ = 5 * 1024 * 1024;
 // mensagem de erro do comprovante ('' = ok); no Pix online ele é obrigatório
@@ -881,12 +903,20 @@ function cpfValido(c){
   return true;
 }
 // modelo com um só tamanho (cropped, infantil) esconde o campo e já preenche o tamanho
-const fillTams=()=>{ const m=CONFIG.modelos.find(x=>x.nome===$('#modelo').value); const ts=m?m.tamanhos:[], unico=ts.length===1;
-  $('#tamanho').innerHTML=(unico?'':'<option value="">Selecione</option>')+ts.map(t=>`<option>${t}</option>`).join('');
-  $('#tamanho-field').hidden=unico; $('#tam-unico').hidden=!unico; $('#tam-unico').textContent=unico?`Tamanho único (${ts[0]})`:'';
+const qtdTxt = n => n==null ? '' : n===0 ? ' — esgotado' : ` — restam ${n}`;
+const fillTams=()=>{ const m=CONFIG.modelos.find(x=>x.nome===$('#modelo').value); const ts=m?m.tamanhos:[], unico=ts.length===1, antes=$('#tamanho').value;
+  $('#tamanho').innerHTML=(unico?'':'<option value="">Selecione</option>')+ts.map(t=>`<option value="${t}" ${resta(m.nome,t)===0?'disabled':''}>${t}${qtdTxt(resta(m.nome,t))}</option>`).join('');
+  if(ts.includes(antes) && resta(m.nome,antes)!==0) $('#tamanho').value=antes;
+  $('#tamanho-field').hidden=unico; $('#tam-unico').hidden=!unico; $('#tam-unico').textContent=unico?`Tamanho único (${ts[0]})${qtdTxt(resta(m.nome,ts[0]))}`:'';
   setErr($('#tamanho'),''); };
-$('#modelo').innerHTML=CONFIG.modelos.map(m=>`<option>${m.nome}</option>`).join('');
-$('#modelo').addEventListener('change',fillTams); fillTams();
+const fillModelos=()=>{ if(!$('#modelo')) return; // inscrição já enviada
+  const antes=$('#modelo').value;
+  $('#modelo').innerHTML=CONFIG.modelos.map(m=>`<option value="${m.nome}" ${restaModelo(m)===0?'disabled':''}>${m.nome}${restaModelo(m)===0?' (esgotado)':''}</option>`).join('');
+  const livre=CONFIG.modelos.find(m=>restaModelo(m)!==0);
+  $('#modelo').value = CONFIG.modelos.some(m=>m.nome===antes && restaModelo(m)!==0) ? antes : (livre?livre.nome:antes);
+  fillTams(); };
+$('#modelo').addEventListener('change',fillTams); fillModelos();
+document.addEventListener('estoque',fillModelos);
 function updateSummary(){
   const st=lotStatus(), lot=CONFIG.lotes[st.i];
   const aluno=$('input[name="vinculo"]:checked')?.dataset.aluno==='1';
@@ -909,6 +939,7 @@ form.addEventListener('input',updateSummary); form.addEventListener('change',upd
 
 form.addEventListener('submit',async e=>{
   e.preventDefault();
+  const v=id=>$('#'+id).value.trim();
   let ok=true;
   const req=(id,msg)=>{ const el=$('#'+id); ok = setErr(el, el.value.trim()?'':msg) && ok; };
   req('nome','Informe seu nome'); req('telefone','Informe seu celular'); req('nascimento','Informe a data de nascimento'); req('categoria','Escolha uma categoria'); req('naipe','Escolha masculino ou feminino'); req('pagamento','Escolha a forma de pagamento');
@@ -917,13 +948,13 @@ form.addEventListener('submit',async e=>{
   if($('#telefone').value.replace(/\D/g,'').length<10){ setErr($('#telefone'),'Número incompleto'); ok=false; }
   const kit=$('input[name="kit"]:checked').value==='1';
   if(kit && !$('#tamanho-field').hidden) ok = setErr($('#tamanho'), $('#tamanho').value?'':'Escolha o tamanho') && ok; else setErr($('#tamanho'),'');
+  if(kit && resta(v('modelo'), v('tamanho'))===0){ ok=false; toast('Esse modelo e tamanho estão esgotados. Escolha outro.'); }
   const arq=$('#comprovante').files[0]; ok = setErr($('#comprovante'), checarArquivo(arq, $('#pagamento').value)) && ok;
   if(!$('input[name="vinculo"]:checked')){ ok=false; toast('Diga se você é aluno Eleva'); }
   const termo=$('#termo-ok'); ok = setErr(termo, termo.checked?'':'Aceite o termo para continuar') && ok;
   if(!ok){ const first=$('.invalid',form)||$('input[name="vinculo"]',form); first?.scrollIntoView({behavior:'smooth',block:'center'}); first?.focus({preventScroll:true}); return; }
 
   const s=updateSummary(); if(!s){ toast('As vendas deste ano já foram encerradas.'); return; }
-  const v=id=>$('#'+id).value.trim();
   const btn=$('button[type="submit"]',form); btn.disabled=true; btn.textContent='Enviando…';
   try{
     const r = await salvar({
@@ -940,18 +971,22 @@ form.addEventListener('submit',async e=>{
 const shirt=$('#shirt-form');
 let shirtMod=CONFIG.modelos[0].nome, shirtTam='';
 function renderShirt(){
-  $('#shirt-mods').innerHTML=CONFIG.modelos.map(m=>`<button type="button" class="opt" data-mod="${esc(m.nome)}" aria-pressed="${m.nome===shirtMod}">${m.nome}</button>`).join('');
-  const ts=CONFIG.modelos.find(m=>m.nome===shirtMod).tamanhos;
-  if(ts.length===1) shirtTam=ts[0]; else if(!ts.includes(shirtTam)) shirtTam='';
-  $('#shirt-tams').innerHTML = ts.length===1 ? `<span class="single-size">Tamanho único (${esc(ts[0])})</span>`
-    : ts.map(t=>`<button type="button" class="opt" data-tam="${esc(t)}" aria-pressed="${t===shirtTam}">${esc(t)}</button>`).join('');
+  if(!$('#shirt-mods')) return; // pedido já enviado
+  $('#shirt-mods').innerHTML=CONFIG.modelos.map(m=>`<button type="button" class="opt" data-mod="${esc(m.nome)}" aria-pressed="${m.nome===shirtMod}" ${restaModelo(m)===0?'disabled':''}>${m.nome}${restaModelo(m)===0?'<small>esgotado</small>':''}</button>`).join('');
+  const m=CONFIG.modelos.find(x=>x.nome===shirtMod), ts=m.tamanhos;
+  if(ts.length===1) shirtTam=resta(m.nome,ts[0])===0?'':ts[0]; else if(!ts.includes(shirtTam) || resta(m.nome,shirtTam)===0) shirtTam='';
+  const n=t=>{ const q=resta(m.nome,t); return q==null?'':`<small>${q===0?'esgotado':q}</small>`; };
+  $('#shirt-tams').innerHTML = ts.length===1 ? `<span class="single-size">Tamanho único (${esc(ts[0])})${resta(m.nome,ts[0])==null?'':qtdTxt(resta(m.nome,ts[0]))}</span>`
+    : ts.map(t=>`<button type="button" class="opt" data-tam="${esc(t)}" aria-pressed="${t===shirtTam}" ${resta(m.nome,t)===0?'disabled':''}>${esc(t)}${n(t)}</button>`).join('');
 }
+document.addEventListener('estoque',()=>{ const m=CONFIG.modelos.find(x=>x.nome===shirtMod); if(restaModelo(m)===0){ const livre=CONFIG.modelos.find(x=>restaModelo(x)!==0); if(livre) shirtMod=livre.nome; } renderShirt(); });
 shirt.addEventListener('click',e=>{
   const m=e.target.closest('[data-mod]'), t=e.target.closest('[data-tam]');
   if(m){ shirtMod=m.dataset.mod; renderShirt(); }
   if(t){ shirtTam=t.dataset.tam; $('#shirt-tam-err').textContent=''; renderShirt(); }
 });
 renderShirt();
+carregarEstoque();
 $('#s-telefone').addEventListener('input',e=>e.target.value=maskPhone(e.target.value));
 shirt.addEventListener('submit',async e=>{
   e.preventDefault();
@@ -960,7 +995,7 @@ shirt.addEventListener('submit',async e=>{
   ok = setErr($('#s-telefone'), sv('s-telefone').replace(/\D/g,'').length>=10?'':'Informe o celular com DDD') && ok;
   ok = setErr($('#s-email'), /^\S+@\S+\.\S+$/.test(sv('s-email'))?'':'E-mail inválido') && ok;
   ok = setErr($('#s-pagamento'), sv('s-pagamento')?'':'Escolha a forma de pagamento') && ok;
-  if(!shirtTam){ $('#shirt-tam-err').textContent='Escolha o tamanho'; ok=false; }
+  if(!shirtTam){ $('#shirt-tam-err').textContent='Escolha um tamanho disponível'; ok=false; }
   const arq=$('#s-comprovante').files[0]; ok = setErr($('#s-comprovante'), checarArquivo(arq, sv('s-pagamento'))) && ok;
   if(!ok) return;
   const btn=$('button[type="submit"]',shirt); btn.disabled=true; btn.textContent='Enviando…';
