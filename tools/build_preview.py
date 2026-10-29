@@ -84,7 +84,7 @@ html = re.sub(r'href="https://waze\.com/ul[^"]*"', 'href="https://waze.com"', ht
 html = html.replace("whatsapp: '5561991812748'", "whatsapp: ''")
 # prévia nunca grava no banco: sem url, salvar() devolve { preview: true }
 html = re.sub(r"supabase: \{ url: '[^']*', key: '[^']*' \}", "supabase: { url: '', key: '' }", html)
-html = html.replace('https://rfn7.github.io/eleva-open-boulder/', '')
+html = html.replace('https://rfn7.github.io/openboulder/', '')
 html = html.replace(
     "function openWa(text){ window.open(waLink(text), '_blank', 'noopener'); }",
     "function openWa(text){ $('#wa-msg').textContent=text; $('#wa-preview').classList.add('open'); }")
