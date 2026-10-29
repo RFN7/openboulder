@@ -94,13 +94,14 @@ Cada inscrição e cada pedido de camiseta avulsa é gravado no Supabase (ver ab
 - Bucket privado `comprovantes` (até 5 MB; jpg, png, webp, heic, pdf): o site só envia.
 - Existe um arquivo de teste de 14 bytes em `comprovantes/camiseta/00000000-...0001.pdf`; pode apagar pelo painel.
 - Código: https://github.com/RFN7/openboulder (público). Site real: https://rfn7.github.io/openboulder/ (GitHub Pages, atualiza a cada push na `main`).
-- Endereço antigo (rfn7.github.io/eleva-open-boulder) redireciona para o novo pelo repositório RFN7/eleva-open-boulder, que só tem páginas de redirecionamento. Não apagar: o QR Code antigo usa esse endereço.
+- Endereço antigo (rfn7.github.io/eleva-open-boulder) está fora do ar desde a troca. Redirecionamento pendente de autorização (repositório público RFN7/eleva-open-boulder só com páginas de redirecionamento). O QR Code antigo usa esse endereço; o novo QR em `qrcode/` já usa rfn7.github.io/openboulder.
 
 ## Estoque de camisetas e painel (29/10/2026)
 - Tabela `eleva_estoque` (modelo × tamanho), valores da planilha do cliente: total 91. Croppeds têm P/M/G/GG; infantil é "8 a 10 anos".
 - Disponível = estoque − pedidos com camiseta não cancelados (view `eleva_estoque_status`; o site lê pela função `eleva_estoque_disponivel`).
 - Trigger `eleva_baixa_estoque` trava o item e recusa a venda quando esgota ("ESGOTADO: ..."). Cancelar devolve ao estoque; reativar um cancelado só se houver estoque.
 - Painel da organização: `admin.html` (https://rfn7.github.io/openboulder/admin.html). Login por e-mail e senha do Supabase Auth; só entra quem está em `eleva_organizadores`.
+- Quem tem acesso: consultar a tabela `eleva_organizadores` no Supabase (não registrar e-mails aqui: o repositório é público).
 - Criar acesso: inserir usuário em `auth.users` + `auth.identities` com senha temporária (crypt/bf) e o e-mail em `eleva_organizadores`. A pessoa troca a senha no botão "Trocar senha".
 - Relatório: aba Relatórios do painel baixa .xlsx por lote (Resumo, Inscrições, Camisetas avulsas). Envio automático por e-mail **pendente**: falta o e-mail de destino e um serviço de envio.
 - Dandara (28/10): Guará → SOF Sul, Infantil → Curumim (só categoria), Deli Deli na programação, lotes só por data, patrocinadores fora até ter todos.
