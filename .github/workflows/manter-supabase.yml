@@ -1,0 +1,20 @@
+# Mantém o projeto Supabase ativo: o plano grátis pausa após 7 dias sem uso.
+# Uma consulta de leitura por dia (a mesma que o site faz para mostrar o estoque).
+name: Manter Supabase ativo
+on:
+  schedule:
+    - cron: '17 11 * * *'   # todo dia às 08h17 de Brasília
+  workflow_dispatch:
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Consulta o estoque
+        run: |
+          code=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
+            "https://tkewhxjfmjcorhsfiuen.supabase.co/rest/v1/rpc/eleva_estoque_disponivel" \
+            -H "apikey: sb_publishable_DgD_d-lKhm4qydg0RoMJXQ_sdO0tGn9" \
+            -H "Authorization: Bearer sb_publishable_DgD_d-lKhm4qydg0RoMJXQ_sdO0tGn9" \
+            -H "Content-Type: application/json" -d '{}')
+          echo "Supabase respondeu $code"
+          test "$code" = "200"
