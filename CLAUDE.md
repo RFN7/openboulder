@@ -114,7 +114,7 @@ Cada inscrição e cada pedido de camiseta avulsa é gravado no Supabase (ver ab
 - Relatórios: camiseta avulsa feita em dia sem lote (30/10) entra no lote seguinte.
 
 ## Pendências
-- Logo RFN clicável no canto do site: falta o arquivo da logo e o número de celular.
+- Logo RFN no rodapé (`assets/logo-rfn.jpg`), abre o WhatsApp: confirmar o número com o Romero antes de publicar.
 - Aguardando aprovação do cliente na prévia.
 - Patrocinadores: 3 espaços ainda com "Sua marca aqui".
 - Regulamento: sai no Instagram @elevaescalada em 05/12.
