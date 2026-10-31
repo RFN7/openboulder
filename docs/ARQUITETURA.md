@@ -184,3 +184,10 @@ O script troca as artes `.jpg` por SVGs provisórios, tira nome, CNPJ, endereço
 | Cores e fontes | Tokens em `:root` no topo do `<style>` |
 
 Depois de qualquer mudança: rodar `tools/build_preview.py` e republicar a prévia no mesmo link.
+
+## Atualização de 31/10/2026
+
+- `eleva_inscricoes` ganhou `responsavel_nome`, `responsavel_cpf`, `responsavel_telefone`, `responsavel_aceite`, `checkin_em` e `camiseta_entregue_em`.
+- O site (`anon`) só insere as colunas do formulário: `checkin_em` e `camiseta_entregue_em` ficam só com a organização.
+- `eleva_anexar_comprovante(codigo, email, caminho)` liga um arquivo de `comprovantes/anexo/` a um pedido sem comprovante. Não devolve dados do pedido.
+- Migração em `supabase/migrations/`.

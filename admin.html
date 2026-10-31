@@ -56,6 +56,10 @@
     .pill.pendente{background:#fde7b0;color:#7a4b00}.pill.confirmado{background:#d5f0dc;color:var(--green)}.pill.cancelado{background:#f5d3d0;color:var(--red)}
     td select{padding:5px 8px;font-size:13px}
     .low{color:var(--red);font-weight:700}
+    .pill.menor{background:#dfe7ff;color:#23408f}.pill.alerta{background:#f5d3d0;color:var(--red)}
+    code{font:700 13px var(--mono)}
+    .btn.ok{background:var(--green);color:#fff}
+    .btn.mini{padding:6px 12px;font-size:11px}
     .contato{display:block;min-width:200px;font-size:12px;color:var(--muted);white-space:normal}
     .link{background:none;border:0;color:var(--rust);text-decoration:underline;cursor:pointer;padding:0;font-size:13px}
     .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
@@ -91,37 +95,51 @@
     <div class="tabs" role="tablist">
       <button type="button" role="tab" data-tab="inscricoes" aria-selected="true">Inscrições</button>
       <button type="button" role="tab" data-tab="camisetas" aria-selected="false">Camisetas avulsas</button>
+      <button type="button" role="tab" data-tab="checkin" aria-selected="false">Dia do evento</button>
       <button type="button" role="tab" data-tab="estoque" aria-selected="false">Estoque</button>
       <button type="button" role="tab" data-tab="relatorios" aria-selected="false">Relatórios</button>
     </div>
 
     <div data-panel="inscricoes">
       <div class="filters">
-        <label>Buscar nome<input id="f-busca" placeholder="Digite um nome"></label>
+        <label>Buscar nome, código ou CPF<input id="f-busca" placeholder="Digite aqui"></label>
         <label>Categoria<select id="f-categoria"><option value="">Todas</option></select></label>
         <label>Naipe<select id="f-naipe"><option value="">Todos</option><option>Masculino</option><option>Feminino</option></select></label>
         <label>Status<select id="f-status"><option value="">Todos</option><option>pendente</option><option>confirmado</option><option>cancelado</option></select></label>
         <label>Lote<select id="f-lote"><option value="">Todos</option></select></label>
+        <label>Menores<select id="f-menor"><option value="">Todos</option><option value="menor">Só menores</option><option value="sem">Menores sem responsável</option></select></label>
         <label>Ordenar<select id="f-ordem"><option value="recentes">Mais recentes</option><option value="nome">Nome</option><option value="categoria">Categoria e nome</option></select></label>
         <button class="btn light" type="button" data-recarregar>Atualizar</button>
       </div>
       <p class="count" id="c-inscricoes"></p>
       <div class="table"><table><thead><tr>
-        <th>Nome</th><th>Categoria</th><th>Naipe</th><th>Vínculo</th><th>Camiseta</th><th>Lote</th><th>Valor</th><th>Pagamento</th><th>Comprovante</th><th>Status</th><th>Data</th><th>Contato</th>
+        <th>Nome</th><th>Código</th><th>Categoria</th><th>Naipe</th><th>Vínculo</th><th>Camiseta</th><th>Lote</th><th>Valor</th><th>Pagamento</th><th>Comprovante</th><th>Status</th><th>Data</th><th>Contato</th>
       </tr></thead><tbody id="t-inscricoes"></tbody></table></div>
     </div>
 
     <div data-panel="camisetas" hidden>
       <div class="filters">
-        <label>Buscar nome<input id="f2-busca" placeholder="Digite um nome"></label>
+        <label>Buscar nome ou código<input id="f2-busca" placeholder="Digite aqui"></label>
         <label>Modelo<select id="f2-modelo"><option value="">Todos</option></select></label>
         <label>Status<select id="f2-status"><option value="">Todos</option><option>pendente</option><option>confirmado</option><option>cancelado</option></select></label>
         <button class="btn light" type="button" data-recarregar>Atualizar</button>
       </div>
       <p class="count" id="c-camisetas"></p>
       <div class="table"><table><thead><tr>
-        <th>Nome</th><th>Modelo</th><th>Tamanho</th><th>Valor</th><th>Pagamento</th><th>Comprovante</th><th>Status</th><th>Data</th><th>Contato</th>
+        <th>Nome</th><th>Código</th><th>Modelo</th><th>Tamanho</th><th>Valor</th><th>Pagamento</th><th>Comprovante</th><th>Status</th><th>Data</th><th>Contato</th>
       </tr></thead><tbody id="t-camisetas"></tbody></table></div>
+    </div>
+
+    <div data-panel="checkin" hidden>
+      <div class="filters">
+        <label>Buscar nome, código ou CPF<input id="f3-busca" placeholder="Digite aqui"></label>
+        <label>Mostrar<select id="f3-ver"><option value="">Todos</option><option value="faltam">Sem check-in</option><option value="camisetas">Camiseta a entregar</option></select></label>
+        <button class="btn light" type="button" data-recarregar>Atualizar</button>
+      </div>
+      <p class="count" id="c-checkin"></p>
+      <div class="table"><table><thead><tr>
+        <th>Nome</th><th>Código</th><th>Categoria</th><th>Camiseta</th><th>Pagamento</th><th>Avisos</th><th>Check-in</th><th>Camiseta entregue</th>
+      </tr></thead><tbody id="t-checkin"></tbody></table></div>
     </div>
 
     <div data-panel="estoque" hidden>
@@ -208,7 +226,16 @@ function preencherFiltros(){
   fill('#f2-modelo', [...new Set(estoque.map(e=>e.modelo))]);
 }
 
-function renderTudo(){ renderKpis(); renderInscricoes(); renderCamisetas(); renderEstoque(); renderRelatorios(); }
+function renderTudo(){ renderKpis(); renderInscricoes(); renderCamisetas(); renderCheckin(); renderEstoque(); renderRelatorios(); }
+
+const codigo = l => l.id.slice(0,8).toUpperCase();
+// busca por nome, código do pedido ou CPF
+const bate = (l, b) => { if(!b) return true; const dig=b.replace(/\D/g,''); return l.nome.toLowerCase().includes(b) || l.id.startsWith(b) || (dig.length>=3 && (l.cpf||'').replace(/\D/g,'').startsWith(dig)); };
+// menor de 18 na data em que se inscreveu
+const ehMenor = l => { if(l.tipo!=='inscricao' || !l.nascimento) return false; const [a,m,d]=l.nascimento.split('-'); return `${+a+18}-${m}-${d}` > diaBR(l.created_at); };
+const semResp = l => ehMenor(l) && !l.responsavel_nome;
+const resp = l => ehMenor(l) ? (l.responsavel_nome ? `<br>Responsável: ${esc(l.responsavel_nome)} · ${esc(l.responsavel_telefone||'')}${l.responsavel_cpf?' · CPF '+esc(l.responsavel_cpf):''}${l.responsavel_aceite?'':' · termo a assinar'}` : '') : '';
+const seloMenor = l => !ehMenor(l) ? '' : semResp(l) ? ` <button class="pill alerta" type="button" data-resp="${l.id}" style="border:0;cursor:pointer">Menor sem responsável</button>` : ` <button class="pill menor" type="button" data-resp="${l.id}" style="border:0;cursor:pointer">Menor</button>`;
 
 function renderKpis(){
   const ativos = linhas.filter(l=>l.status!=='cancelado');
@@ -222,38 +249,59 @@ function renderKpis(){
     ['Recebido (confirmado)', brl(conf.reduce((s,l)=>s+Number(l.valor),0))],
     ['A receber (pendente)', brl(ativos.filter(l=>l.status==='pendente').reduce((s,l)=>s+Number(l.valor),0))],
     ['Camisetas disponíveis', `${total-vendidas} de ${total}`],
+    ['Menores sem responsável', ativos.filter(semResp).length],
   ];
   $('#kpis').innerHTML = k.map(([t,v])=>`<div class="kpi"><small>${t}</small><b>${v}</b></div>`).join('');
 }
 
 const statusSelect = l => `<select data-status="${l.id}" aria-label="Status de ${esc(l.nome)}">${['pendente','confirmado','cancelado'].map(s=>`<option ${s===l.status?'selected':''}>${s}</option>`).join('')}</select>`;
 const comprovanteBtn = l => l.comprovante ? `<button class="link" type="button" data-comp="${esc(l.comprovante)}">ver</button>` : '<span class="contato">—</span>';
-const contato = l => `<span class="contato">${esc(l.telefone)}<br>${esc(l.email)}${l.cpf?'<br>CPF '+esc(l.cpf):''}${l.obs?'<br>Obs.: '+esc(l.obs):''}</span>`;
+const contato = l => `<span class="contato">${esc(l.telefone)}<br>${esc(l.email)}${l.cpf?'<br>CPF '+esc(l.cpf):''}${resp(l)}${l.obs?'<br>Obs.: '+esc(l.obs):''}</span>`;
 
 function renderInscricoes(){
-  const busca=$('#f-busca').value.trim().toLowerCase(), cat=$('#f-categoria').value, naipe=$('#f-naipe').value, st=$('#f-status').value, lote=$('#f-lote').value, ordem=$('#f-ordem').value;
-  let r = linhas.filter(l=>l.tipo==='inscricao' && (!busca||l.nome.toLowerCase().includes(busca)) && (!cat||l.categoria===cat) && (!naipe||l.naipe===naipe) && (!st||l.status===st) && (!lote||l.lote===lote));
+  const busca=$('#f-busca').value.trim().toLowerCase(), cat=$('#f-categoria').value, naipe=$('#f-naipe').value, st=$('#f-status').value, lote=$('#f-lote').value, ordem=$('#f-ordem').value, men=$('#f-menor').value;
+  let r = linhas.filter(l=>l.tipo==='inscricao' && bate(l,busca) && (!men||(men==='sem'?semResp(l):ehMenor(l))) && (!cat||l.categoria===cat) && (!naipe||l.naipe===naipe) && (!st||l.status===st) && (!lote||l.lote===lote));
   if(ordem==='nome') r.sort((a,b)=>a.nome.localeCompare(b.nome,'pt-BR'));
   if(ordem==='categoria') r.sort((a,b)=>CATEGORIAS.indexOf(a.categoria)-CATEGORIAS.indexOf(b.categoria) || a.naipe.localeCompare(b.naipe) || a.nome.localeCompare(b.nome,'pt-BR'));
   $('#c-inscricoes').textContent = `${r.length} inscrição(ões) · ${r.filter(l=>l.status!=='cancelado').length} ativas`;
   $('#t-inscricoes').innerHTML = r.map(l=>`<tr class="${l.status}">
-    <td class="nome">${esc(l.nome)}</td><td>${esc(l.categoria)}</td><td>${esc(l.naipe)}</td><td>${esc(l.vinculo)}</td>
+    <td class="nome">${esc(l.nome)}${seloMenor(l)}</td><td><code>${codigo(l)}</code></td><td>${esc(l.categoria)}</td><td>${esc(l.naipe)}</td><td>${esc(l.vinculo)}</td>
     <td>${l.com_camiseta?esc(l.modelo)+' · '+esc(l.tamanho):'—'}</td><td>${esc(l.lote)}</td><td class="num">${brl(l.valor)}</td>
     <td>${esc(l.pagamento)}</td><td>${comprovanteBtn(l)}</td><td>${statusSelect(l)}</td><td>${dataBR(l.created_at)}</td><td>${contato(l)}</td></tr>`).join('')
-    || '<tr><td colspan="12">Nenhuma inscrição com esses filtros.</td></tr>';
+    || '<tr><td colspan="13">Nenhuma inscrição com esses filtros.</td></tr>';
 }
-['#f-busca','#f-categoria','#f-naipe','#f-status','#f-lote','#f-ordem'].forEach(s=>$(s).addEventListener('input',renderInscricoes));
+['#f-busca','#f-categoria','#f-naipe','#f-status','#f-lote','#f-menor','#f-ordem'].forEach(s=>$(s).addEventListener('input',renderInscricoes));
 
 function renderCamisetas(){
   const busca=$('#f2-busca').value.trim().toLowerCase(), mod=$('#f2-modelo').value, st=$('#f2-status').value;
-  const r = linhas.filter(l=>l.tipo==='camiseta' && (!busca||l.nome.toLowerCase().includes(busca)) && (!mod||l.modelo===mod) && (!st||l.status===st));
+  const r = linhas.filter(l=>l.tipo==='camiseta' && bate(l,busca) && (!mod||l.modelo===mod) && (!st||l.status===st));
   $('#c-camisetas').textContent = `${r.length} pedido(s)`;
   $('#t-camisetas').innerHTML = r.map(l=>`<tr class="${l.status}">
-    <td class="nome">${esc(l.nome)}</td><td>${esc(l.modelo)}</td><td>${esc(l.tamanho)}</td><td class="num">${brl(l.valor)}</td>
+    <td class="nome">${esc(l.nome)}</td><td><code>${codigo(l)}</code></td><td>${esc(l.modelo)}</td><td>${esc(l.tamanho)}</td><td class="num">${brl(l.valor)}</td>
     <td>${esc(l.pagamento)}</td><td>${comprovanteBtn(l)}</td><td>${statusSelect(l)}</td><td>${dataBR(l.created_at)}</td><td>${contato(l)}</td></tr>`).join('')
-    || '<tr><td colspan="9">Nenhum pedido com esses filtros.</td></tr>';
+    || '<tr><td colspan="10">Nenhum pedido com esses filtros.</td></tr>';
 }
 ['#f2-busca','#f2-modelo','#f2-status'].forEach(s=>$(s).addEventListener('input',renderCamisetas));
+
+function renderCheckin(){
+  const busca=$('#f3-busca').value.trim().toLowerCase(), ver=$('#f3-ver').value;
+  const ativos = linhas.filter(l=>l.status!=='cancelado'), ins = ativos.filter(l=>l.tipo==='inscricao'), cam = ativos.filter(l=>l.com_camiseta);
+  const r = ativos.filter(l=>bate(l,busca) && (ver!=='faltam'||(l.tipo==='inscricao'&&!l.checkin_em)) && (ver!=='camisetas'||(l.com_camiseta&&!l.camiseta_entregue_em)))
+    .sort((a,b)=>a.nome.localeCompare(b.nome,'pt-BR'));
+  $('#c-checkin').textContent = `Check-in: ${ins.filter(l=>l.checkin_em).length} de ${ins.length} · Camisetas entregues: ${cam.filter(l=>l.camiseta_entregue_em).length} de ${cam.length}`;
+  const hora = s => new Date(s).toLocaleTimeString('pt-BR',{timeZone:'America/Sao_Paulo',hour:'2-digit',minute:'2-digit'});
+  const botao = (l, campo, txt) => l[campo]
+    ? `<button class="btn ok mini" type="button" data-marca="${campo}" data-id="${l.id}" title="Clique para desfazer">✓ ${dataBR(l[campo]).slice(0,5)} ${hora(l[campo])}</button>`
+    : `<button class="btn light mini" type="button" data-marca="${campo}" data-id="${l.id}">${txt}</button>`;
+  $('#t-checkin').innerHTML = r.map(l=>`<tr>
+    <td class="nome">${esc(l.nome)}</td><td><code>${codigo(l)}</code></td><td>${l.tipo==='inscricao'?esc(l.categoria)+' · '+esc(l.naipe):'Camiseta avulsa'}</td>
+    <td>${l.com_camiseta?esc(l.modelo)+' · '+esc(l.tamanho):'—'}</td><td><span class="pill ${l.status}">${l.status}</span> ${brl(l.valor)}</td>
+    <td>${semResp(l)?`<button class="pill alerta" type="button" data-resp="${l.id}" style="border:0;cursor:pointer">Menor sem responsável</button>`:ehMenor(l)?`<span class="contato">Menor. Responsável: ${esc(l.responsavel_nome)}${l.responsavel_aceite?'':' (termo a assinar)'}</span>`:''}</td>
+    <td>${l.tipo==='inscricao'?botao(l,'checkin_em','Fazer check-in'):'—'}</td>
+    <td>${l.com_camiseta?botao(l,'camiseta_entregue_em','Entregar'):'—'}</td></tr>`).join('')
+    || '<tr><td colspan="8">Ninguém com esses filtros.</td></tr>';
+}
+['#f3-busca','#f3-ver'].forEach(s=>$(s).addEventListener('input',renderCheckin));
 
 function renderEstoque(){
   $('#t-estoque').innerHTML = estoque.map(e=>`<tr>
@@ -288,6 +336,28 @@ document.addEventListener('click', async e=>{
     const { error } = await db.from('eleva_estoque').update({ quantidade:q }).eq('modelo',modelo).eq('tamanho',tamanho);
     toast(error ? 'Não foi possível salvar.' : `${modelo} ${tamanho}: ${q} ✓`); await carregar();
   }
+  const mc = e.target.closest('[data-marca]');
+  if(mc){
+    const l = linhas.find(x=>x.id===mc.dataset.id), campo = mc.dataset.marca, desfazer = !!l[campo];
+    const oque = campo==='checkin_em' ? 'check-in' : 'entrega da camiseta';
+    if(desfazer && !confirm(`Desfazer ${oque} de ${l.nome}?`)) return;
+    if(!desfazer && l.status==='pendente' && !confirm(`${l.nome} está com pagamento pendente (${brl(l.valor)}). Registrar ${oque} mesmo assim?`)) return;
+    if(!desfazer && campo==='checkin_em' && semResp(l) && !confirm(`${l.nome} é menor e está sem responsável registrado. Fazer check-in mesmo assim?`)) return;
+    mc.disabled = true;
+    const { error } = await db.from('eleva_inscricoes').update({ [campo]: desfazer ? null : new Date().toISOString() }).eq('id', l.id);
+    if(error){ mc.disabled=false; toast('Não foi possível salvar.'); return; }
+    toast(`${l.nome}: ${oque} ${desfazer?'desfeito':'registrado'} ✓`); await carregar();
+  }
+  const rs = e.target.closest('[data-resp]');
+  if(rs){
+    const l = linhas.find(x=>x.id===rs.dataset.resp);
+    const nome = window.prompt(`Responsável legal por ${l.nome}: nome completo`, l.responsavel_nome||''); if(nome===null || !nome.trim()) return;
+    const cpf = window.prompt('CPF do responsável', l.responsavel_cpf||''); if(cpf===null) return;
+    const tel = window.prompt('Celular do responsável', l.responsavel_telefone||''); if(tel===null) return;
+    const aceite = window.confirm('O responsável já aceitou o Termo de Responsabilidade? OK = sim. Cancelar = ainda vai assinar.');
+    const { error } = await db.from('eleva_inscricoes').update({ responsavel_nome:nome.trim(), responsavel_cpf:cpf.trim()||null, responsavel_telefone:tel.trim()||null, responsavel_aceite:aceite }).eq('id', l.id);
+    toast(error ? 'Não foi possível salvar.' : `Responsável de ${l.nome} salvo ✓`); await carregar();
+  }
   const rel = e.target.closest('[data-relatorio]');
   if(rel) baixarRelatorio(rel.dataset.relatorio);
 });
@@ -298,8 +368,8 @@ $$('[role="tab"]').forEach(t=>t.addEventListener('click',()=>{
 
 /* ---------- relatórios ---------- */
 const hoje = () => diaBR(new Date());
-// pedido avulso entra no lote em que foi feito (pela data)
-const loteDaData = d => (LOTES.find(l=>d>=l.de && d<=l.ate) || {}).nome || 'Fora de lote';
+// pedido avulso entra no lote da data; no intervalo sem lote (30/10), entra no próximo, como as inscrições daquele dia
+const loteDaData = d => (LOTES.find(l=>d<=l.ate) || {}).nome || 'Fora de lote';
 function renderRelatorios(){
   const blocos = [...LOTES.map(l=>({ id:l.nome, titulo:l.nome, sub: l.de===l.ate ? l.de.split('-').reverse().slice(0,2).join('/') : `${l.de.split('-').reverse().slice(0,2).join('/')} a ${l.ate.split('-').reverse().slice(0,2).join('/')}`, fim:l.ate })),
                   { id:'__todos', titulo:'Geral', sub:'Tudo até agora' }];
@@ -331,8 +401,8 @@ function baixarRelatorio(id){
     ...estoque.map(e=>[e.modelo, e.tamanho, ativos.filter(l=>l.com_camiseta&&l.modelo===e.modelo&&l.tamanho===e.tamanho).length]).filter(r=>r[2]>0), [],
     ['Estoque agora', 'Tamanho', 'Total', 'Vendidas', 'Disponíveis'], ...estoque.map(e=>[e.modelo,e.tamanho,e.quantidade,e.vendidas,e.disponivel]),
   ];
-  const insc = rows.filter(l=>l.tipo==='inscricao').map(l=>({ Nome:l.nome, Categoria:l.categoria, Naipe:l.naipe, 'Vínculo':l.vinculo, Camiseta:l.com_camiseta?`${l.modelo} ${l.tamanho}`:'Não', Lote:l.lote, Valor:Number(l.valor), Pagamento:l.pagamento, Comprovante:l.comprovante?'Sim':'Não', Status:l.status, Data:dataBR(l.created_at), Celular:l.telefone, 'E-mail':l.email, CPF:l.cpf, Nascimento:l.nascimento, 'Observações':l.obs||'' }));
-  const cams = rows.filter(l=>l.tipo==='camiseta').map(l=>({ Nome:l.nome, Modelo:l.modelo, Tamanho:l.tamanho, Valor:Number(l.valor), Pagamento:l.pagamento, Comprovante:l.comprovante?'Sim':'Não', Status:l.status, Data:dataBR(l.created_at), Celular:l.telefone, 'E-mail':l.email }));
+  const insc = rows.filter(l=>l.tipo==='inscricao').map(l=>({ Nome:l.nome, 'Código':codigo(l), Categoria:l.categoria, Naipe:l.naipe, 'Vínculo':l.vinculo, Camiseta:l.com_camiseta?`${l.modelo} ${l.tamanho}`:'Não', Lote:l.lote, Valor:Number(l.valor), Pagamento:l.pagamento, Comprovante:l.comprovante?'Sim':'Não', Status:l.status, Data:dataBR(l.created_at), Celular:l.telefone, 'E-mail':l.email, CPF:l.cpf, Nascimento:l.nascimento, 'Menor':ehMenor(l)?'Sim':'Não', 'Responsável':l.responsavel_nome||'', 'CPF do responsável':l.responsavel_cpf||'', 'Celular do responsável':l.responsavel_telefone||'', 'Termo aceito pelo responsável':ehMenor(l)?(l.responsavel_aceite?'Sim':'Não'):'', 'Check-in':l.checkin_em?dataBR(l.checkin_em):'', 'Camiseta entregue':l.camiseta_entregue_em?dataBR(l.camiseta_entregue_em):'', 'Observações':l.obs||'' }));
+  const cams = rows.filter(l=>l.tipo==='camiseta').map(l=>({ Nome:l.nome, 'Código':codigo(l), Modelo:l.modelo, Tamanho:l.tamanho, Valor:Number(l.valor), Pagamento:l.pagamento, Comprovante:l.comprovante?'Sim':'Não', Status:l.status, Data:dataBR(l.created_at), Celular:l.telefone, 'E-mail':l.email, 'Camiseta entregue':l.camiseta_entregue_em?dataBR(l.camiseta_entregue_em):'' }));
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(resumo), 'Resumo');
   XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(insc.length?insc:[{Nome:'Nenhuma inscrição'}]), 'Inscrições');

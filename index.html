@@ -218,6 +218,7 @@
     .step b{width:30px;height:30px;border-radius:50%;background:var(--rust);color:var(--cream);display:grid;place-items:center;font:700 14px var(--mono)}
     .step:not(:first-child){margin-top:30px;padding-top:26px;border-top:1px dashed var(--line)}
     .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .fgrid[hidden]{display:none}
     .field{display:flex;flex-direction:column;gap:6px}
     .field.full{grid-column:1/-1}
     .field label,.legend{font:700 11px var(--mono);letter-spacing:.1em;text-transform:uppercase}
@@ -527,7 +528,7 @@
             <div class="field"><label for="s-telefone">Celular</label><input id="s-telefone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(61) 90000-0000" required><span class="err"></span></div>
             <div class="field"><label for="s-email">E-mail</label><input id="s-email" type="email" autocomplete="email" placeholder="voce@email.com" required><span class="err"></span></div>
             <div class="field full"><label for="s-pagamento">Como vai pagar?</label><select id="s-pagamento" required><option value="">Selecione</option><option>Pix (anexo o comprovante)</option><option>Pix na recepção</option><option>Débito na recepção</option><option>Crédito na recepção</option><option>Dinheiro na recepção</option></select><span class="err"></span></div>
-            <div class="field full"><label for="s-comprovante">Comprovante <span style="text-transform:none;font-weight:400;letter-spacing:0">(foto ou PDF, até 5 MB)</span></label><input id="s-comprovante" type="file" accept="image/*,application/pdf"><span class="err"></span><small class="help">Obrigatório no Pix. Pagando na recepção, pode anexar depois ou mostrar na retirada.</small></div>
+            <div class="field full"><label for="s-comprovante">Comprovante <span style="text-transform:none;font-weight:400;letter-spacing:0">(foto ou PDF, até 5 MB)</span></label><input id="s-comprovante" type="file" accept="image/*,application/pdf"><span class="err"></span><small class="help">Obrigatório no Pix. Pagando na recepção, envie depois em <a href="#enviar-comprovante">Enviar comprovante</a> ou mostre na retirada.</small></div>
           </div>
           <p class="help" style="margin:0">Seus dados são usados só para o pedido e a retirada da camiseta. Apenas a organização tem acesso.</p>
           <button class="btn gold block" type="submit">Pedir camiseta</button>
@@ -552,6 +553,13 @@
             <div class="field"><label for="email">E-mail</label><input id="email" name="email" type="email" autocomplete="email" placeholder="voce@email.com" required><span class="err"></span></div>
             <div class="field"><label for="cpf">CPF</label><input id="cpf" name="cpf" inputmode="numeric" placeholder="000.000.000-00" required><span class="err"></span></div>
             <div class="field"><label for="nascimento">Data de nascimento</label><input id="nascimento" name="nascimento" type="date" required><span class="err"></span></div>
+          </div>
+          <div class="fgrid" id="resp-fields" hidden style="margin-top:16px">
+            <p class="help field full" style="margin:0"><b>Participante menor de 18 anos.</b> Preencha com os dados do responsável legal, que precisa aceitar o termo e acompanhar o menor no evento.</p>
+            <div class="field full"><label for="resp-nome">Nome do responsável legal</label><input id="resp-nome" autocomplete="off"><span class="err"></span></div>
+            <div class="field"><label for="resp-cpf">CPF do responsável</label><input id="resp-cpf" inputmode="numeric" placeholder="000.000.000-00" autocomplete="off"><span class="err"></span></div>
+            <div class="field"><label for="resp-telefone">Celular do responsável</label><input id="resp-telefone" type="tel" inputmode="tel" placeholder="(61) 90000-0000" autocomplete="off"><span class="err"></span></div>
+            <div class="field full"><label class="consent"><input type="checkbox" id="resp-ok"><span>Sou o responsável legal por este menor, autorizo a participação e aceito o Termo de Responsabilidade em nome dele.</span></label><span class="err"></span></div>
           </div>
 
           <h3 class="step"><b>2</b>Categoria</h3>
@@ -580,10 +588,10 @@
           <h3 class="step"><b>4</b>Pagamento e termo</h3>
           <div class="fgrid">
             <div class="field full"><label for="pagamento">Como vai pagar?</label><select id="pagamento" name="pagamento" required><option value="">Selecione</option><option>Pix (anexo o comprovante)</option><option>Pix na recepção</option><option>Débito na recepção</option><option>Crédito na recepção</option><option>Dinheiro na recepção</option></select><span class="err"></span></div>
-            <div class="field full"><label for="comprovante">Comprovante <span style="text-transform:none;font-weight:400;letter-spacing:0">(foto ou PDF, até 5 MB)</span></label><input id="comprovante" name="comprovante" type="file" accept="image/*,application/pdf"><span class="err"></span><small class="help">Obrigatório no Pix. Pagando na recepção, pode anexar depois ou mostrar no check-in.</small></div>
-            <div class="field full"><label for="obs">Observações <span style="text-transform:none;font-weight:400;letter-spacing:0">(opcional)</span></label><textarea id="obs" name="obs" rows="2" placeholder="Ex.: condição de saúde, responsável pelo menor, necessidade de acessibilidade…"></textarea></div>
+            <div class="field full"><label for="comprovante">Comprovante <span style="text-transform:none;font-weight:400;letter-spacing:0">(foto ou PDF, até 5 MB)</span></label><input id="comprovante" name="comprovante" type="file" accept="image/*,application/pdf"><span class="err"></span><small class="help">Obrigatório no Pix. Pagando na recepção, envie depois em <a href="#enviar-comprovante">Enviar comprovante</a> ou mostre no check-in.</small></div>
+            <div class="field full"><label for="obs">Observações <span style="text-transform:none;font-weight:400;letter-spacing:0">(opcional)</span></label><textarea id="obs" name="obs" rows="2" placeholder="Ex.: condição de saúde, necessidade de acessibilidade…"></textarea></div>
             <div class="field full"><label class="consent"><input type="checkbox" id="termo-ok" required><span>Li e concordo com o <a href="#termo">Termo de Responsabilidade</a> e com o regulamento do campeonato.</span></label><span class="err"></span></div>
-            <p class="help field full" style="margin:0">Seus dados (nome, CPF, nascimento, contato e comprovante) são usados só para organizar o Eleva Open Boulder 2026: inscrição, categoria, camiseta, premiação e contato sobre o evento. Apenas a organização tem acesso, e nada é repassado a terceiros. Para corrigir ou apagar seus dados, fale com a Eleva pelo Instagram <a href="https://www.instagram.com/elevaescalada/" target="_blank" rel="noopener">@elevaescalada</a>.</p>
+            <p class="help field full" style="margin:0">Seus dados (nome, CPF, nascimento, contato, comprovante e, para menores, os dados do responsável) são usados só para organizar o Eleva Open Boulder 2026: inscrição, categoria, camiseta, premiação e contato sobre o evento. Apenas a organização tem acesso, e nada é repassado a terceiros. Para corrigir ou apagar seus dados, fale com a Eleva pelo Instagram <a href="https://www.instagram.com/elevaescalada/" target="_blank" rel="noopener">@elevaescalada</a>.</p>
           </div>
           <div style="margin-top:26px"><button class="btn block" type="submit">Enviar inscrição</button></div>
         </form>
@@ -597,6 +605,18 @@
           <p class="hint" id="sum-hint">Valor calculado pelo lote vigente hoje.</p>
           <img src="assets/inscricoes.jpg" alt="Inscrições abertas — Eleva Open Boulder, 12 de dezembro" loading="lazy">
         </aside>
+      </div>
+    <div class="signup-grid" id="enviar-comprovante" style="margin-top:28px;scroll-margin-top:90px">
+        <form class="form-card" id="late-form" novalidate>
+          <h3 class="step">Enviar comprovante</h3>
+          <p class="help" style="margin:0 0 14px">Já se inscreveu ou pediu a camiseta e falta o comprovante? Use o código recebido ao enviar e o mesmo e-mail do pedido.</p>
+          <div class="fgrid">
+            <div class="field"><label for="l-codigo">Código</label><input id="l-codigo" maxlength="8" autocomplete="off" placeholder="Ex.: 1A2B3C4D" style="text-transform:uppercase"><span class="err"></span></div>
+            <div class="field"><label for="l-email">E-mail do pedido</label><input id="l-email" type="email" autocomplete="email" placeholder="voce@email.com"><span class="err"></span></div>
+            <div class="field full"><label for="l-arquivo">Comprovante <span style="text-transform:none;font-weight:400;letter-spacing:0">(foto ou PDF, até 5 MB)</span></label><input id="l-arquivo" type="file" accept="image/*,application/pdf"><span class="err"></span></div>
+          </div>
+          <div style="margin-top:20px"><button class="btn block" type="submit">Enviar comprovante</button></div>
+        </form>
       </div>
     </div>
   </section>
@@ -668,13 +688,13 @@
       </div>
       <div class="faq-list reveal">
         <details><summary>Já peguei pódio na Iniciante ou Intermediário. E agora?</summary><p>Bora subir de categoria! E não adianta disfarçar: a gente conhece vocês e pode ajustar a sua categoria.</p></details>
-        <details><summary>Como confirmo minha inscrição?</summary><p>Preencha o formulário e anexe o comprovante do pagamento. Ao enviar, você recebe um código. A organização confere o pagamento e confirma sua vaga.</p></details>
+        <details><summary>Como confirmo minha inscrição?</summary><p>Preencha o formulário e anexe o comprovante do pagamento. Ao enviar, você recebe um código. A organização confere o pagamento e confirma sua vaga. Se pagar depois, use o código e o e-mail da inscrição em “Enviar comprovante”, logo abaixo do formulário.</p></details>
         <details><summary>Como funciona a virada de lote?</summary><p>Cada lote vale até a data indicada no card. Depois dela, entra o próximo lote. O valor que vale é o do dia da inscrição.</p></details>
         <details><summary>Quando sai o regulamento?</summary><p>O regulamento é divulgado no Instagram <a href="https://www.instagram.com/elevaescalada/" target="_blank" rel="noopener">@elevaescalada</a> no dia 05/12, uma semana antes do evento. Fiquem ligados!</p></details>
         <details><summary>Posso comprar só a camiseta?</summary><p>Pode. A camiseta preta custa R$ 90 em qualquer lote. Faça o pedido na seção <a href="#camiseta">Camiseta</a> aqui do site.</p></details>
         <details><summary>Posso ir só para assistir?</summary><p>Pode e deve! A torcida faz parte do Open. Tem comida, bebida, música e happy hour. A entrada para a torcida é livre.</p></details>
         <details><summary>Quando retiro a camiseta?</summary><p>Na recepção da Eleva a partir da semana do evento, ou no check-in do dia 12/12. Leve o código da inscrição ou do pedido.</p></details>
-        <details><summary>Menor de idade pode participar?</summary><p>Sim, nas categorias Curumim e Funfarra (e nas adultas, conforme o nível). O responsável legal precisa aceitar o termo e acompanhar o menor.</p></details>
+        <details><summary>Menor de idade pode participar?</summary><p>Sim, nas categorias Curumim e Funfarra (e nas adultas, conforme o nível). Ao informar a data de nascimento, o formulário pede os dados do responsável legal, que precisa aceitar o termo e acompanhar o menor.</p></details>
       </div>
     </div>
   </section>
@@ -746,17 +766,19 @@ const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt
 function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),2600); }
 
 /* banco de dados (Supabase): o site só insere; quem lê e confirma é a organização no painel */
+async function enviarArquivo(arquivo, pasta, id){
+  const { url, key } = CONFIG.supabase;
+  const ext = (arquivo.name.split('.').pop() || 'bin').toLowerCase().replace(/[^a-z0-9]/g,'').slice(0,5) || 'bin';
+  const caminho = `${pasta}/${id}.${ext}`;
+  const up = await fetch(`${url}/storage/v1/object/comprovantes/${caminho}`, { method:'POST', headers:{ apikey:key, Authorization:`Bearer ${key}`, 'Content-Type': arquivo.type || 'application/octet-stream', 'x-upsert':'false' }, body: arquivo });
+  if(!up.ok) throw new Error('Não conseguimos enviar o comprovante. Tente de novo.');
+  return caminho;
+}
 async function salvar(dados, arquivo){
   const { url, key } = CONFIG.supabase;
   if(!url) return { preview: true }; // prévia: não grava nada
   const id = crypto.randomUUID(), headers = { apikey: key, Authorization: `Bearer ${key}` };
-  let comprovante = null;
-  if(arquivo){
-    const ext = (arquivo.name.split('.').pop() || 'bin').toLowerCase().replace(/[^a-z0-9]/g,'').slice(0,5);
-    comprovante = `${dados.tipo}/${id}.${ext}`;
-    const up = await fetch(`${url}/storage/v1/object/comprovantes/${comprovante}`, { method:'POST', headers:{ ...headers, 'Content-Type': arquivo.type || 'application/octet-stream', 'x-upsert':'false' }, body: arquivo });
-    if(!up.ok) throw new Error('Não conseguimos enviar o comprovante. Tente de novo.');
-  }
+  const comprovante = arquivo ? await enviarArquivo(arquivo, dados.tipo, id) : null;
   const r = await fetch(`${url}/rest/v1/eleva_inscricoes`, { method:'POST', headers:{ ...headers, 'Content-Type':'application/json', Prefer:'return=minimal' }, body: JSON.stringify({ id, ...dados, comprovante }) });
   if(!r.ok){
     const msg = (await r.json().catch(()=>({}))).message || '';
@@ -789,7 +811,7 @@ function concluir(el, r, titulo, total){
   el.innerHTML = `<div class="done"><h3>${titulo} ✓</h3>
     <p>Código <code>${cod}</code> · Total <b>${brl(total)}</b></p>
     <p>${r.preview ? 'Esta é a prévia do site: nada foi salvo.' : 'Guarde o código. A organização confere o pagamento e confirma.'}</p>
-    <p class="help">Ainda não pagou? Pix CNPJ ${CONFIG.pix} ou na recepção da Eleva.</p></div>`;
+    <p class="help">Ainda não pagou? Pix CNPJ ${CONFIG.pix} ou na recepção da Eleva. O comprovante pode ser enviado depois em <a href="#enviar-comprovante">Enviar comprovante</a>.</p></div>`;
   el.scrollIntoView({ behavior:'smooth', block:'center' });
 }
 
@@ -899,6 +921,16 @@ const maskPhone=v=>{v=v.replace(/\D/g,'').slice(0,11);return v.length>10?v.repla
 const maskCpf=v=>v.replace(/\D/g,'').slice(0,11).replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d{1,2})$/,'$1-$2');
 $('#telefone').addEventListener('input',e=>e.target.value=maskPhone(e.target.value));
 $('#cpf').addEventListener('input',e=>e.target.value=maskCpf(e.target.value));
+$('#resp-telefone').addEventListener('input',e=>e.target.value=maskPhone(e.target.value));
+$('#resp-cpf').addEventListener('input',e=>e.target.value=maskCpf(e.target.value));
+// menor de 18 na data da inscrição (quem faz 18 antes do evento ainda precisa do responsável ao aceitar o termo)
+function ehMenor(nasc){
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(nasc)) return false;
+  const h=new Date(), [a,m,d]=nasc.split('-').map(Number);
+  return new Date(a+18,m-1,d) > new Date(h.getFullYear(),h.getMonth(),h.getDate());
+}
+const toggleResp=()=>{ $('#resp-fields').hidden=!ehMenor($('#nascimento').value); };
+$('#nascimento').addEventListener('input',toggleResp); $('#nascimento').addEventListener('change',toggleResp);
 function cpfValido(c){
   c=c.replace(/\D/g,''); if(c.length!==11||/^(\d)\1+$/.test(c)) return false;
   for(let t=9;t<11;t++){ let s=0; for(let i=0;i<t;i++) s+=+c[i]*(t+1-i); if(((s*10)%11)%10!==+c[t]) return false; }
@@ -953,6 +985,14 @@ form.addEventListener('submit',async e=>{
   if(kit && resta(v('modelo'), v('tamanho'))===0){ ok=false; toast('Esse modelo e tamanho estão esgotados. Escolha outro.'); }
   const arq=$('#comprovante').files[0]; ok = setErr($('#comprovante'), checarArquivo(arq, $('#pagamento').value)) && ok;
   if(!$('input[name="vinculo"]:checked')){ ok=false; toast('Diga se você é aluno Eleva'); }
+  const menor=ehMenor(v('nascimento'));
+  ['resp-nome','resp-cpf','resp-telefone','resp-ok'].forEach(id=>setErr($('#'+id),''));
+  if(menor){
+    ok = setErr($('#resp-nome'), v('resp-nome').length>=3?'':'Informe o nome do responsável') && ok;
+    ok = setErr($('#resp-cpf'), cpfValido(v('resp-cpf'))?'':'CPF inválido') && ok;
+    ok = setErr($('#resp-telefone'), v('resp-telefone').replace(/\D/g,'').length>=10?'':'Informe o celular com DDD') && ok;
+    ok = setErr($('#resp-ok'), $('#resp-ok').checked?'':'O responsável precisa autorizar') && ok;
+  }
   const termo=$('#termo-ok'); ok = setErr(termo, termo.checked?'':'Aceite o termo para continuar') && ok;
   if(!ok){ const first=$('.invalid',form)||$('input[name="vinculo"]',form); first?.scrollIntoView({behavior:'smooth',block:'center'}); first?.focus({preventScroll:true}); return; }
 
@@ -964,6 +1004,7 @@ form.addEventListener('submit',async e=>{
       categoria:v('categoria'), naipe:v('naipe'), vinculo:$('input[name="vinculo"]:checked').value,
       com_camiseta:kit, modelo:kit?v('modelo'):null, tamanho:kit?v('tamanho'):null,
       lote:s.lot.nome, valor:s.total, pagamento:v('pagamento'), obs:v('obs')||null, termo_aceito:true,
+      ...(menor ? { responsavel_nome:v('resp-nome'), responsavel_cpf:v('resp-cpf'), responsavel_telefone:v('resp-telefone'), responsavel_aceite:true } : {}),
     }, arq);
     concluir(form, r, 'Inscrição recebida', s.total);
   }catch(err){ toast(err.message); btn.disabled=false; btn.textContent='Enviar inscrição'; }
@@ -1006,6 +1047,32 @@ shirt.addEventListener('submit',async e=>{
       com_camiseta:true, modelo:shirtMod, tamanho:shirtTam, valor:CONFIG.camiseta, pagamento:sv('s-pagamento') }, arq);
     concluir(shirt, r, 'Pedido recebido', CONFIG.camiseta);
   }catch(err){ toast(err.message); btn.disabled=false; btn.textContent='Pedir camiseta'; }
+});
+
+/* comprovante enviado depois: confere código + e-mail, envia o arquivo e liga ao pedido */
+const late=$('#late-form');
+async function anexar(codigo, email, caminho){
+  const { url, key } = CONFIG.supabase;
+  const r = await fetch(`${url}/rest/v1/rpc/eleva_anexar_comprovante`, { method:'POST', headers:{ apikey:key, Authorization:`Bearer ${key}`, 'Content-Type':'application/json' }, body: JSON.stringify({ p_codigo:codigo, p_email:email, p_caminho:caminho }) });
+  if(!r.ok) throw new Error('Não conseguimos enviar agora. Confira sua conexão e tente de novo.');
+  return r.json();
+}
+const ERROS_ANEXO = { nao_encontrado:'Não achamos esse pedido. Confira o código e o e-mail.', ja_enviado:'Este pedido já tem comprovante. Se precisar trocar, fale com a organização.' };
+late.addEventListener('submit',async e=>{
+  e.preventDefault();
+  const codigo=$('#l-codigo').value.trim().toLowerCase(), email=$('#l-email').value.trim(), arq=$('#l-arquivo').files[0];
+  let ok = setErr($('#l-codigo'), /^[0-9a-f]{8}$/.test(codigo)?'':'O código tem 8 letras e números');
+  ok = setErr($('#l-email'), /^\S+@\S+\.\S+$/.test(email)?'':'E-mail inválido') && ok;
+  ok = setErr($('#l-arquivo'), !arq?'Escolha o arquivo':arq.size>MAX_ARQ?'O arquivo passa de 5 MB':'') && ok;
+  if(!ok) return;
+  if(!CONFIG.supabase.url){ toast('Esta é a prévia do site: nada foi enviado.'); return; }
+  const btn=$('button[type="submit"]',late); btn.disabled=true; btn.textContent='Enviando…';
+  try{
+    let res = await anexar(codigo, email, null);
+    if(res==='ok') res = await anexar(codigo, email, await enviarArquivo(arq, 'anexo', crypto.randomUUID()));
+    if(res!=='ok') throw new Error(ERROS_ANEXO[res] || ERROS_ANEXO.nao_encontrado);
+    late.innerHTML='<div class="done"><h3>Comprovante recebido ✓</h3><p>A organização confere o pagamento e confirma.</p></div>';
+  }catch(err){ toast(err.message); btn.disabled=false; btn.textContent='Enviar comprovante'; }
 });
 
 /* animações ao rolar */
