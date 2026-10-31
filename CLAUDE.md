@@ -112,7 +112,14 @@ Cada inscrição e cada pedido de camiseta avulsa é gravado no Supabase (ver ab
 - Site: seção "Enviar comprovante" (código + e-mail do pedido), pela função `eleva_anexar_comprovante`. Não troca comprovante já enviado.
 - Painel: coluna e busca por código, filtro de menores, registro do responsável, aba "Dia do evento" (check-in e entrega de camiseta) e novas colunas na planilha.
 - Relatórios: camiseta avulsa feita em dia sem lote (30/10) entra no lote seguinte.
-- Rodapé: logo RFN (`assets/logo-rfn.jpg`) com link para o WhatsApp de Romero.
+- Rodapé: QR Code 3D da RFN com "RFN" embaixo e link para o WhatsApp de Romero (ver abaixo).
+
+## QR Code 3D da RFN no rodapé (31/10/2026)
+- Modelo "Circuito" em Three.js 0.170, com a logo `assets/logo-rfn.jpg` no centro. Abre https://wa.me/5561994331877.
+- Código: `assets/qr3d.js`. Three.js fica em `assets/vendor/` e só é baixado quando o rodapé se aproxima da tela.
+- `assets/qr-rfn.jpg` é a imagem fixa usada enquanto o 3D carrega, sem WebGL ou no modo de economia de dados.
+- O código só fica legível depois da montagem (cerca de 3 s). Ao mexer na animação, testar a leitura de novo.
+- Para trocar o destino: `python3 tools/build_qr_rfn.py` grava a imagem fixa e imprime a matriz para colar em `assets/qr3d.js`.
 
 ## Pendências
 - Aguardando aprovação do cliente na prévia.

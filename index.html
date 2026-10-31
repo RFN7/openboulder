@@ -284,9 +284,13 @@
     .footer h4{font:700 12px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:0 0 12px}
     .footer a{display:block;text-decoration:none;opacity:.8;margin:6px 0}
     .footer a:hover{opacity:1;color:var(--gold)}
-    .footer a.rfn-badge{margin:0 0 0 auto;opacity:1;line-height:0;border-radius:12px;transition:transform .15s}
-    .footer a.rfn-badge:hover{transform:scale(1.08)}
-    .rfn-badge img{width:72px;height:72px;border-radius:12px;border:1px solid var(--line-d)}
+    .footer a.rfn-badge{margin:0 0 0 auto;opacity:1;display:flex;flex-direction:column;align-items:center;gap:8px;text-decoration:none;color:var(--cream)}
+    .footer a.rfn-badge:hover{color:var(--gold)}
+    .rfn-qr{position:relative;width:min(240px,70vw);aspect-ratio:1/1}
+    .rfn-qr img{position:absolute;inset:13%;width:74%;height:74%;border-radius:6px}
+    .rfn-qr.is-3d img{display:none}
+    .rfn-qr canvas{display:block;width:100%!important;height:100%!important}
+    .rfn-name{font:400 24px/1 var(--display);letter-spacing:.06em}
     .footer-bottom{border-top:1px solid var(--line-d);margin-top:40px;padding-top:18px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;font:400 12px var(--mono);color:rgba(255,235,180,.5)}
 
     .icon-btn{background:none;border:0;cursor:pointer;color:inherit;padding:6px;font-size:22px;line-height:1}
@@ -331,6 +335,7 @@
       .footer-grid{grid-template-columns:1fr}
     }
     @media (max-width:600px){
+      .footer a.rfn-badge{margin:8px auto 0}
       .wrap{width:calc(100% - 32px)}
       section{padding:68px 0}
       .section-head{display:block;margin-bottom:30px}
@@ -710,9 +715,22 @@
       <div><h4>Navegue</h4><a href="#ingressos">Ingressos</a><a href="#camiseta">Camiseta</a><a href="#programacao">Programação</a><a href="#local">Como chegar</a></div>
       <div><h4>Fale com a gente</h4><a href="https://www.instagram.com/elevaescalada/" target="_blank" rel="noopener">Instagram @elevaescalada</a></div>
     </div>
-    <div class="footer-bottom"><span>© 2026 Eleva Open Boulder · DFM Esportes LTDA</span><span>Arte: Estúdio Avoada</span><a class="rfn-badge" href="https://wa.me/5561994331877" target="_blank" rel="noopener" aria-label="Falar com a RFN no WhatsApp" title="Falar com a RFN no WhatsApp"><img src="assets/logo-rfn.jpg" alt="RFN" width="72" height="72" loading="lazy"></a></div>
+    <div class="footer-bottom"><span>© 2026 Eleva Open Boulder · DFM Esportes LTDA</span><span>Arte: Estúdio Avoada</span><a class="rfn-badge" href="https://wa.me/5561994331877" target="_blank" rel="noopener" aria-label="Falar com a RFN no WhatsApp" title="Falar com a RFN no WhatsApp"><span class="rfn-qr" id="rfn-qr" data-logo="assets/logo-rfn.jpg"><img src="assets/qr-rfn.jpg" alt="QR Code para o WhatsApp da RFN" width="656" height="656" loading="lazy"></span><span class="rfn-name">RFN</span></a></div>
   </div>
 </footer>
+<script>
+  // QR Code 3D: só baixa o Three.js quando o rodapé se aproxima. Sem WebGL ou no modo de economia de dados, fica a imagem fixa.
+  (function(){
+    const box=document.getElementById('rfn-qr');
+    if(!box||!('IntersectionObserver' in window)||navigator.connection?.saveData)return;
+    const io=new IntersectionObserver(([en])=>{
+      if(!en.isIntersecting)return;
+      io.disconnect();
+      import('./assets/qr3d.js').then(m=>m.init(box,box.dataset.logo)).then(api=>{window.__rfnQr=api;}).catch(err=>console.warn('QR 3D indisponível; mantendo a imagem fixa.',err));
+    },{rootMargin:'400px'});
+    io.observe(box);
+  })();
+</script>
 
 <div class="mobile-cta" id="mobile-cta">
   <div class="info"><span id="m-lot">1º lote</span><b id="m-price">a partir de R$ 80</b></div>

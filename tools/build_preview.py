@@ -1,5 +1,5 @@
 """Gera a prévia sem marca do site (para aprovação do cliente)."""
-import re, sys, pathlib
+import re, shutil, sys, pathlib
 
 src = pathlib.Path(sys.argv[1])
 out = pathlib.Path(sys.argv[2])
@@ -12,7 +12,7 @@ SIZES = {
     'adesivos': (876, 1190, 'Cartela de adesivos'), 'brasao-dourado': (1070, 1390, 'Brasão do evento'),
     'brasao': (1070, 1340, 'Brasão do evento'), 'camiseta-rocha': (1800, 1005, 'Foto da camiseta'), 'camiseta-frente': (1272, 1408, 'Foto da camiseta'),
     'ecobag': (1800, 1005, 'Foto da ecobag'), 'inscricoes': (1100, 1240, 'Arte de inscrições'),
-    'poster': (1400, 1128, 'Pôster oficial'), 'regatas': (1800, 1005, 'Foto das regatas'), 'logo-rfn': (192, 192, 'RFN'),
+    'poster': (1400, 1128, 'Pôster oficial'), 'regatas': (1800, 1005, 'Foto das regatas'), 'logo-rfn': (192, 192, 'RFN'), 'qr-rfn': (656, 656, 'QR Code'),
 }
 
 def holds(w, h):
@@ -49,6 +49,11 @@ for name, (w, h, label) in SIZES.items():
 <text x="700" y="200" text-anchor="middle" font-family="Georgia,serif" font-weight="900" font-size="110" fill="{INK}">CLIMB DAS ANTIGAS</text>
 </svg>''', encoding='utf-8')
 html = re.sub(r'assets/([\w-]+)\.jpg', r'assets/\1.svg', html)
+
+# ---------- QR Code 3D: mesmos scripts do site real ----------
+for rel in ['qr3d.js', 'vendor/three.module.min.js', 'vendor/RoundedBoxGeometry.js']:
+    (out / 'assets' / rel).parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy(src.parent / 'assets' / rel, out / 'assets' / rel)
 
 # ---------- textos: tira marca, CNPJ, endereço ----------
 REPL = [
