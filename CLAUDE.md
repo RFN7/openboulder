@@ -107,14 +107,14 @@ Cada inscrição e cada pedido de camiseta avulsa é gravado no Supabase (ver ab
 - Dandara (28/10): Guará → SOF Sul, Infantil → Curumim (só categoria), Deli Deli na programação, lotes só por data, patrocinadores fora até ter todos.
 
 ## Responsável legal, comprovante depois e dia do evento (31/10/2026)
-- **Antes de publicar:** aplicar `supabase/migrations/20261031_responsavel_checkin_comprovante.sql`. Sem as colunas novas, a inscrição de menor falha.
+- Migração `supabase/migrations/20261031_responsavel_checkin_comprovante.sql` aplicada em 31/10 pelo SQL Editor (não aparece em `list_migrations`).
 - Formulário: menor de 18 na data da inscrição precisa informar nome, CPF e celular do responsável e autorizar. A checagem é só no site; quem escapar aparece no painel como "Menor sem responsável".
 - Site: seção "Enviar comprovante" (código + e-mail do pedido), pela função `eleva_anexar_comprovante`. Não troca comprovante já enviado.
 - Painel: coluna e busca por código, filtro de menores, registro do responsável, aba "Dia do evento" (check-in e entrega de camiseta) e novas colunas na planilha.
 - Relatórios: camiseta avulsa feita em dia sem lote (30/10) entra no lote seguinte.
+- Rodapé: logo RFN (`assets/logo-rfn.jpg`) com link para o WhatsApp de Romero.
 
 ## Pendências
-- Logo RFN no rodapé (`assets/logo-rfn.jpg`), abre o WhatsApp: confirmar o número com o Romero antes de publicar.
 - Aguardando aprovação do cliente na prévia.
 - Patrocinadores: 3 espaços ainda com "Sua marca aqui".
 - Regulamento: sai no Instagram @elevaescalada em 05/12.
