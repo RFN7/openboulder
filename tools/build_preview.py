@@ -72,6 +72,10 @@ REPL = [
 ]
 for a, b in REPL:
     html = html.replace(a, b)
+# endereço atual (SOF Sul): nenhum resto pode sobrar na prévia
+html = re.sub(r'SOF Sul, Quadra 11.*?CEP 71215-257', '[Endereço da academia]<br>Brasília – DF', html, flags=re.S)
+html = re.sub(r'SOF Sul(?:,| —| -)? Brasília', 'Brasília', html)
+html = html.replace('SOF Sul', 'Brasília')
 html = re.sub(r'\bEleva\b', 'Academia', html)
 
 # mapa embutido não carrega no artifact: troca por um bloco de aviso
@@ -123,5 +127,5 @@ for pat in [r'<!doctype html>\s*', r'<html[^>]*>\s*', r'</html>\s*', r'<head>\s*
 html = html.replace('body{margin:0;background:var(--paper)', ':root{color-scheme:light}\n    body{margin:0;background:var(--paper)', 1)
 
 (out / 'index.html').write_text(html.strip() + '\n', encoding='utf-8')
-left = re.findall(r'.{30}(?:Eleva|DFM|31\.288|elevaescalada|SOF Sul|5561991812748|supabase\.co|sb_publishable).{30}', html, flags=re.I)
+left = re.findall(r'.{0,30}(?:Eleva\b|DFM|31\.288|elevaescalada|SOF Sul|Quadra 11|71215|71\.215|Guará|5561991812748|supabase\.co|sb_publishable).{0,30}', html, flags=re.I)
 print('restos de marca:', left or 'nenhum')
