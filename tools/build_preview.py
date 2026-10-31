@@ -75,7 +75,7 @@ for a, b in REPL:
 # endereço atual (SOF Sul): nenhum resto pode sobrar na prévia
 html = re.sub(r'SOF Sul, Quadra 11.*?CEP 71215-257', '[Endereço da academia]<br>Brasília – DF', html, flags=re.S)
 html = re.sub(r'SOF Sul(?:,| —| -)? Brasília', 'Brasília', html)
-html = html.replace('SOF Sul', 'Brasília')
+html = html.replace('no SOF Sul', 'em Brasília').replace('SOF Sul', 'Brasília')
 html = re.sub(r'\bEleva\b', 'Academia', html)
 
 # mapa embutido não carrega no artifact: troca por um bloco de aviso
